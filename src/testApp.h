@@ -5,6 +5,11 @@
 #include "ofMain.h"
 #include "ofxMidi.h"
 
+// Visualizer Classes
+
+#include "averageVolume.h"
+#include "spectrum.h"
+
 // public ofxMidiListener
 class testApp : public ofBaseApp, public ofxMidiListener {
 	
@@ -29,29 +34,25 @@ class testApp : public ofBaseApp, public ofxMidiListener {
 		void audioIn(float * input, int bufferSize, int nChannels); 
     
         vector <float> chn[6];
-		vector <float> volHistory[6];
-		
-		int 	bufferCounter;
-		int 	drawCounter;
-		
+				
 		float smoothedVol[6];
 		float scaledVol[6];
 		
         void newMidiMessage(ofxMidiEventArgs& eventArgs);
 
-        // vars
         int port;
         int id;
         int value;
         double timestamp;
         char msg[255];
-    
-        char title[255];
-        
-        // midi addon
+
         ofxMidiIn midiIn;
-    
 		ofSoundStream soundStream;
+    
+        // Visualizers
+    
+        vector<AverageVolume> averageVolumes; 
+        vector<Spectrum> spectrums; 
 };
 
 #endif	
