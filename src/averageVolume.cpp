@@ -8,6 +8,9 @@
 
 #include "averageVolume.h"
 
+AverageVolume::AverageVolume() {
+}
+
 void AverageVolume::setup() {
 }
 

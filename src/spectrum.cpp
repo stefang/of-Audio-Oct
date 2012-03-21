@@ -8,6 +8,9 @@
 
 #include "spectrum.h"
 
+Spectrum::Spectrum() {
+}
+
 void Spectrum::setup() {
 }
 
