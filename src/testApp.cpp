@@ -35,6 +35,8 @@ void testApp::setup(){
 	// x num buffers (latency)
 
 	soundStream.setup(this, 0, channelCount, 44100, sizeBuffer, 2);
+    
+    midiVis.setup();
 
 }
 
@@ -62,6 +64,7 @@ void testApp::draw(){
         spectrums[c].draw( chn[c] );
     }
     
+    midiVis.draw();
 }
 
 //--------------------------------------------------------------
@@ -90,8 +93,6 @@ void testApp::audioIn(float * input, int bufferSize, int nChannels){
         // smoothedVol = curVol;
         
 	}
-	
-	
 }
 
 //--------------------------------------------------------------
@@ -113,6 +114,8 @@ void testApp::newMidiMessage(ofxMidiEventArgs& eventArgs) {
 	id = eventArgs.channel;
 	port = eventArgs.port;
 	timestamp = eventArgs.timestamp;
+    midiVis.update(value);
+    
 }
 
 //--------------------------------------------------------------

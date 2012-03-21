@@ -9,6 +9,7 @@
 
 #include "averageVolume.h"
 #include "spectrum.h"
+#include "midiBlocks.h"
 
 // public ofxMidiListener
 class testApp : public ofBaseApp, public ofxMidiListener {
@@ -43,6 +44,7 @@ class testApp : public ofBaseApp, public ofxMidiListener {
     int id;
     int value;
     double timestamp;
+    
     char msg[255];
 
     ofxMidiIn midiIn;
@@ -52,6 +54,8 @@ class testApp : public ofBaseApp, public ofxMidiListener {
 
     vector<AverageVolume> averageVolumes; 
     vector<Spectrum> spectrums;
+    
+    MidiBlocks midiVis;
     
 };
 
