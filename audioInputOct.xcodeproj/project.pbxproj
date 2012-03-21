@@ -21,6 +21,8 @@
 		82434DF4151691310009029B /* ofxFft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82434DC6151691300009029B /* ofxFft.cpp */; };
 		82434DF5151691310009029B /* ofxFftBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82434DC8151691300009029B /* ofxFftBasic.cpp */; };
 		82434DF6151691310009029B /* ofxFftw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82434DCA151691300009029B /* ofxFftw.cpp */; };
+		825FD476151A376D001E9013 /* averageVolume.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 825FD475151A376D001E9013 /* averageVolume.cpp */; };
+		825FD479151A4A54001E9013 /* spectrum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 825FD478151A4A54001E9013 /* spectrum.cpp */; };
 		82A69B4315166EF500EB959C /* g3.icns in Resources */ = {isa = PBXBuildFile; fileRef = 82A69B3E15166E6C00EB959C /* g3.icns */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
@@ -101,6 +103,10 @@
 		82434DC9151691300009029B /* ofxFftBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFftBasic.h; sourceTree = "<group>"; };
 		82434DCA151691300009029B /* ofxFftw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFftw.cpp; sourceTree = "<group>"; };
 		82434DCB151691300009029B /* ofxFftw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFftw.h; sourceTree = "<group>"; };
+		825FD474151A375C001E9013 /* averageVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = averageVolume.h; sourceTree = "<group>"; };
+		825FD475151A376D001E9013 /* averageVolume.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = averageVolume.cpp; sourceTree = "<group>"; };
+		825FD477151A4A48001E9013 /* spectrum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spectrum.h; sourceTree = "<group>"; };
+		825FD478151A4A54001E9013 /* spectrum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = spectrum.cpp; sourceTree = "<group>"; };
 		82A69B3E15166E6C00EB959C /* g3.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = g3.icns; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -279,6 +285,10 @@
 		825FD46E151A3457001E9013 /* visualizers */ = {
 			isa = PBXGroup;
 			children = (
+				825FD474151A375C001E9013 /* averageVolume.h */,
+				825FD475151A376D001E9013 /* averageVolume.cpp */,
+				825FD477151A4A48001E9013 /* spectrum.h */,
+				825FD478151A4A54001E9013 /* spectrum.cpp */,
 			);
 			name = visualizers;
 			sourceTree = "<group>";
@@ -489,6 +499,8 @@
 				82434DF4151691310009029B /* ofxFft.cpp in Sources */,
 				82434DF5151691310009029B /* ofxFftBasic.cpp in Sources */,
 				82434DF6151691310009029B /* ofxFftw.cpp in Sources */,
+				825FD476151A376D001E9013 /* averageVolume.cpp in Sources */,
+				825FD479151A4A54001E9013 /* spectrum.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
