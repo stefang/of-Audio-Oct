@@ -19,18 +19,19 @@ class Spectrum
     public :
     Spectrum();
     Spectrum(ofVec2f pos, int c) {
-        position = pos ;
+        position = pos;
         channel = c;
     }
-    
-    void setup() ;
-    void update() ;
-    void draw( vector <float> chn ) ;
+
+    void setup();
+    void update();
+    void draw( vector <float> chn );
     
     char title[255];
     int channel;
     
     ofVec2f position;
+    
 };
 
 

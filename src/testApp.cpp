@@ -25,8 +25,9 @@ void testApp::setup(){
         // Create Visualisers
         averageVolumes.push_back( AverageVolume(ofVec2f(562,(c*100+50))));
         spectrums.push_back( Spectrum(ofVec2f(50,(c*100+50)), c));
+        
     }
-	
+    
     // x output channels, 
 	// x input channels
 	// x samples per second
@@ -42,15 +43,10 @@ void testApp::update(){
 	 
     for (int c = 0; c < channelCount; c++) {
         scaledVol[c] = ofMap(smoothedVol[c], 0.0, 0.17, 0.0, 1.0, true); // scale the vol up to a 0-1 range
-        
         // Update Visualisers with audio data
-        
         averageVolumes[c].update( scaledVol[c] ) ;
-
     }
     
-    // Midi input recieved
-    sprintf(msg,"value: %i, received from port: %i, id: %i \n\nwith %f milliseconds difference from last message",value,port,id,timestamp);
 }
 
 //--------------------------------------------------------------
@@ -58,19 +54,14 @@ void testApp::draw(){
     
     ofSetColor(225);
     ofNoFill();
+    
+    // Audio Visualisers
 
     for (int c = 0; c < channelCount; c++) {
-                
-        // Draw Averages
-        for ( int i = 0 ; i < averageVolumes.size() ; i++ ) {
-            averageVolumes[i].draw( scaledVol[c] ) ;
-        }
-    
-        // Draw Spectrums
-        for ( int i = 0 ; i < spectrums.size() ; i++ ) {
-            spectrums[i].draw( chn[c] ) ;
-        }
+        averageVolumes[c].draw( scaledVol[c] );
+        spectrums[c].draw( chn[c] );
     }
+    
 }
 
 //--------------------------------------------------------------

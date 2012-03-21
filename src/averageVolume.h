@@ -15,21 +15,22 @@
 
 class AverageVolume
 {
-    
+
     public :
     AverageVolume();
     AverageVolume(ofVec2f pos) {
-        position = pos ;
+        position = pos;
         volHistory.assign(400, 0.0);
     }
     
-    void setup() ;
-    void update(float scaledVol) ;
-    void draw(float scaledVol) ;
+    void setup();
+    void update(float scaledVol);
+    void draw(float scaledVol);
     
     vector <float> volHistory;
     
     ofVec2f position;
+    
 };
 
 

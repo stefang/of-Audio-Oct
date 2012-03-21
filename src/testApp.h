@@ -15,44 +15,44 @@ class testApp : public ofBaseApp, public ofxMidiListener {
 	
 	public:
 		
-		void setup();
-		void update();
-		void draw();
-		
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-				
+    void setup();
+    void update();
+    void draw();
     
-        int channelCount;
-		void audioIn(float * input, int bufferSize, int nChannels); 
-    
-        vector <float> chn[6];
-				
-		float smoothedVol[6];
-		float scaledVol[6];
-		
-        void newMidiMessage(ofxMidiEventArgs& eventArgs);
+    void keyPressed(int key);
+    void keyReleased(int key);
+    void mouseMoved(int x, int y );
+    void mouseDragged(int x, int y, int button);
+    void mousePressed(int x, int y, int button);
+    void mouseReleased(int x, int y, int button);
+    void windowResized(int w, int h);
+    void dragEvent(ofDragInfo dragInfo);
+    void gotMessage(ofMessage msg);
+            
+    int channelCount;
+    void audioIn(float * input, int bufferSize, int nChannels); 
 
-        int port;
-        int id;
-        int value;
-        double timestamp;
-        char msg[255];
+    vector <float> chn[6];
+            
+    float smoothedVol[6];
+    float scaledVol[6];
+    
+    void newMidiMessage(ofxMidiEventArgs& eventArgs);
 
-        ofxMidiIn midiIn;
-		ofSoundStream soundStream;
+    int port;
+    int id;
+    int value;
+    double timestamp;
+    char msg[255];
+
+    ofxMidiIn midiIn;
+    ofSoundStream soundStream;
+
+    // Visualizers
+
+    vector<AverageVolume> averageVolumes; 
+    vector<Spectrum> spectrums;
     
-        // Visualizers
-    
-        vector<AverageVolume> averageVolumes; 
-        vector<Spectrum> spectrums; 
 };
 
 #endif	
