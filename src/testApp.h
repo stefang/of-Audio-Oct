@@ -24,16 +24,18 @@ class testApp : public ofBaseApp, public ofxMidiListener {
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 				
+    
+        int channelCount;
 		void audioIn(float * input, int bufferSize, int nChannels); 
     
         vector <float> chn[6];
-		vector <float> volHistory;
+		vector <float> volHistory[6];
 		
 		int 	bufferCounter;
 		int 	drawCounter;
 		
-		float smoothedVol;
-		float scaledVol;
+		float smoothedVol[6];
+		float scaledVol[6];
 		
         void newMidiMessage(ofxMidiEventArgs& eventArgs);
 

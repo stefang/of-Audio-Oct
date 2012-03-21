@@ -11,51 +11,48 @@ void testApp::setup(){
 	midiIn.openPort(0);
 	midiIn.addListener(this);
 	
-	// 0 output channels, 
-	// 6 input channels
-	// 44100 samples per second
-	// 128 samples per buffer
-	// 4 num buffers (latency)
-	
 	soundStream.listDevices();
 	
 	//if you want to set a different device id 
-	soundStream.setDeviceID(4); //bear in mind the device id corresponds to all audio devices, including  input-only and output-only devices.
+	soundStream.setDeviceID(0); //bear in mind the device id corresponds to all audio devices, including  input-only and output-only devices.
 	
-	int sizeBuffer = 128;
-	
-	
-	chn[0].assign(sizeBuffer, 0.0);
-	chn[1].assign(sizeBuffer, 0.0);
-	chn[2].assign(sizeBuffer, 0.0);
-	chn[3].assign(sizeBuffer, 0.0);
-	chn[4].assign(sizeBuffer, 0.0);
-	chn[5].assign(sizeBuffer, 0.0);
-    
-	volHistory.assign(400, 0.0);
+    channelCount = 2;
+    int sizeBuffer = 128;
+
+    for (int c = 0; c < channelCount; c++) {
+        chn[c].assign(sizeBuffer, 0.0);
+        volHistory[c].assign(400, 0.0);
+        smoothedVol[c] = 0.0;
+        scaledVol[c] = 0.0;
+    }
 	
 	bufferCounter	= 0;
 	drawCounter		= 0;
-	smoothedVol     = 0.0;
-	scaledVol		= 0.0;
+    
+    // x output channels, 
+	// x input channels
+	// x samples per second
+	// x samples per buffer
+	// x num buffers (latency)
 
-	soundStream.setup(this, 0, 6, 44100, sizeBuffer, 2);
+	soundStream.setup(this, 0, channelCount, 44100, sizeBuffer, 2);
 
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
 	//lets scale the vol up to a 0-1 range 
-	scaledVol = ofMap(smoothedVol, 0.0, 0.17, 0.0, 1.0, true);
-
-	//lets record the volume into an array
-	volHistory.push_back( scaledVol );
-	
-	//if we are bigger the the size we want to record - lets drop the oldest value
-	if( volHistory.size() >= 400 ){
-		volHistory.erase(volHistory.begin(), volHistory.begin()+1);
-	}
-    
+    for (int c = 0; c < channelCount; c++) {
+        scaledVol[c] = ofMap(smoothedVol[c], 0.0, 0.17, 0.0, 1.0, true);
+        //lets record the volume into an array
+        volHistory[c].push_back( scaledVol[c] );
+        
+        //if we are bigger the the size we want to record - lets drop the oldest value
+        if( volHistory[c].size() >= 400 ){
+            volHistory[c].erase(volHistory[c].begin(), volHistory[c].begin()+1);
+        }
+        
+    }
     // Midi input recieved
     sprintf(msg,"value: %i, received from port: %i, id: %i \n\nwith %f milliseconds difference from last message",value,port,id,timestamp);
 
@@ -69,8 +66,8 @@ void testApp::draw(){
 	
 	ofNoFill();
 	
-	// draw the six channels:
-    for (int c = 0; c < 6; c++) {
+	// draw the X channels:
+    for (int c = 0; c < channelCount; c++) {
         int y = (c * 100);
         ofPushStyle();
 		ofPushMatrix();
@@ -89,41 +86,44 @@ void testApp::draw(){
         
         ofBeginShape();
         for (int i = 0; i < chn[c].size(); i++){
-            ofVertex(i*4, 50 -chn[c][i]*90.0f);
+            ofVertex((i*4)+2, 50 -chn[c][i]*90.0f);
         }
         ofEndShape(false);
         
 		ofPopMatrix();
         ofPopStyle();
         
-    }
-	
-	// draw the average volume:
-	ofPushStyle();
+        // draw the average volume:
+        
+        ofPushStyle();
 		ofPushMatrix();
-		ofTranslate(565, 170, 0);
-			
+		ofTranslate(543, 50+y, 0);
+        
 		ofSetColor(225);
-		ofDrawBitmapString("Scaled average vol (0-100): " + ofToString(scaledVol * 100.0, 0), 4, 18);
-		ofRect(0, 0, 400, 400);
+		ofDrawBitmapString("Scaled average vol (0-100): " + ofToString(scaledVol[c] * 100.0, 0), 4, 18);
+		ofRect(0, 0, 400, 100);
 		
 		ofSetColor(245, 58, 135);
 		ofFill();		
-		ofCircle(200, 200, scaledVol * 190.0f);
+		ofCircle(50, 50, scaledVol[c] * 25.0f);
 		
 		//lets draw the volume history as a graph
 		ofBeginShape();
-		for (int i = 0; i < volHistory.size(); i++){
-			if( i == 0 ) ofVertex(i, 400);
-
-			ofVertex(i, 400 - volHistory[i] * 70);
+		for (int i = 0; i < volHistory[c].size(); i++){
+			if( i == 0 ) ofVertex(i+1, 99);
+            
+			ofVertex(i+1, 101 - volHistory[c][i] * 70);
 			
-			if( i == volHistory.size() -1 ) ofVertex(i, 400);
+			if( i == volHistory[c].size() -1 ) ofVertex(i+1, 99);
 		}
 		ofEndShape(false);		
-			
+        
 		ofPopMatrix();
-	ofPopStyle();
+        ofPopStyle();
+        
+
+    
+    }
 	
 	drawCounter++;
 	
@@ -137,31 +137,31 @@ void testApp::draw(){
 //--------------------------------------------------------------
 void testApp::audioIn(float * input, int bufferSize, int nChannels){	
 	
-	float curVol = 0.0;
-	
-	// samples are "interleaved"
-	int numCounted = 0;	
-
 	//lets go through each sample and calculate the root mean square which is a rough way to calculate volume	
-	for (int i = 0; i < bufferSize; i++){
-        for (int c = 0; c < 6; c++) {
-            chn[c][i]	= input[i*6+c]*0.5;
+    for (int c = 0; c < channelCount; c++) {
+        float curVol = 0.0;
+        
+        // samples are "interleaved"
+        int numCounted = 0;	
+        
+        for (int i = 0; i < bufferSize; i++){
+            chn[c][i]	= input[i*channelCount+c]*0.5;
             curVol += chn[c][i] * chn[c][i];
         }
-		numCounted+=6;
+		numCounted+=channelCount;
+        //this is how we get the mean of rms :) 
+        curVol /= (float)numCounted;
+        
+        // this is how we get the root of rms :) 
+        curVol = sqrt( curVol );
+        
+        smoothedVol[c] *= 0.93;
+        smoothedVol[c] += 0.07 * curVol;
+        // smoothedVol = curVol;
+        
+        bufferCounter++;
 	}
 	
-	//this is how we get the mean of rms :) 
-	curVol /= (float)numCounted;
-	
-	// this is how we get the root of rms :) 
-	curVol = sqrt( curVol );
-	
-	smoothedVol *= 0.93;
-	smoothedVol += 0.07 * curVol;
-    // smoothedVol = curVol;
-	
-	bufferCounter++;
 	
 }
 
