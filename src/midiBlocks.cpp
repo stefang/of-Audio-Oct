@@ -12,8 +12,8 @@ MidiBlocks::MidiBlocks() {
 }
 
 void MidiBlocks::setup() {
-    width = ofGetScreenWidth();
-    blockSize = (int)((width - 100) / 127)/2;
+    width = ofGetViewportWidth();
+    blockSize = (int)((width - 12) / 127);
 }
 
 void MidiBlocks::update(int value) {
@@ -23,19 +23,17 @@ void MidiBlocks::update(int value) {
 void MidiBlocks::draw() {
     ofPushStyle();
     ofPushMatrix();
-    ofTranslate(50, 20);
+    ofTranslate(20, 20);
     ofSetColor(225);
-    ofSetLineWidth(1);
     for (int i = 0; i < 127; i++) {
-        
         if (notes[i]==true) {
             ofSetColor(245, 58, 135);
         } else {
-            ofSetColor(0, 0, 0);
+            ofSetColor(10, 10, 10);
         }
         ofFill();		
         
-        ofRect(i*blockSize, 0, blockSize, blockSize);
+        ofRect(i*blockSize, 0, blockSize-1, blockSize-1);
         
     }
     ofPopMatrix();

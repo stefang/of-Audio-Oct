@@ -8,44 +8,52 @@ void testApp::setup(){
 	ofBackground(54, 54, 54);	
     
     midiIn.listPorts();
-	midiIn.openPort(0);
+	midiIn.openPort(1);
 	midiIn.addListener(this);
 	
 	soundStream.listDevices();
 	soundStream.setDeviceID(0);
-	
-    channelCount = 2;
-    int sizeBuffer = 128;
-
-    for (int c = 0; c < channelCount; c++) {
-        chn[c].assign(sizeBuffer, 0.0);
-        smoothedVol[c] = 0.0;
-        scaledVol[c] = 0.0;
-        
-        // Create Visualisers
-        averageVolumes.push_back( AverageVolume(ofVec2f(562,(c*100+50))));
-        spectrums.push_back( Spectrum(ofVec2f(50,(c*100+50)), c));
-        
-    }
-    
     // x output channels, 
 	// x input channels
 	// x samples per second
 	// x samples per buffer
 	// x num buffers (latency)
+    soundStream.setup(this, 0, CHANNEL_COUNT, 44100, BUFFER_SIZE, 2);
+    	
+    for (int c = 0; c < CHANNEL_COUNT; c++) {
+        chn[c].assign(BUFFER_SIZE, 0.0);
+        smoothedVol[c] = 0.0;
+        scaledVol[c] = 0.0;
+                
+        fft[c] = ofxFft::create(BUFFER_SIZE, OF_FFT_WINDOW_BARTLETT);
+        // To use with FFTW, try:
+        // fft = ofxFft::create(BUFFER_SIZE, OF_FFT_WINDOW_BARTLETT, OF_FFT_FFTW);
+        
+        audioInput[c] = new float[BUFFER_SIZE];
+        fftOutput[c] = new float[fft[c]->getBinSize()];
+        eqFunction[c] = new float[fft[c]->getBinSize()];
+        eqOutput[c] = new float[fft[c]->getBinSize()];
+        ifftOutput[c] = new float[BUFFER_SIZE];
+        
+        for(int i = 0; i < fft[c]->getBinSize(); i++)
+            eqFunction[c][i] = (float) (fft[c]->getBinSize() - i) / (float) fft[c]->getBinSize();
+        
+        // Create Visualisers
+        spectrums.push_back( Spectrum(ofVec2f(20,(c*100+50)), c));
+        classicBars.push_back( ClassicFftBars(ofVec2f(296,(c*100+50)), c));
+        averageVolumes.push_back( AverageVolume(ofVec2f(856,(c*100+50))));
+    }
 
-	soundStream.setup(this, 0, channelCount, 44100, sizeBuffer, 2);
-    
     midiVis.setup();
-
+    
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-	 
-    for (int c = 0; c < channelCount; c++) {
+    
+    for (int c = 0; c < CHANNEL_COUNT; c++) {
         scaledVol[c] = ofMap(smoothedVol[c], 0.0, 0.17, 0.0, 1.0, true); // scale the vol up to a 0-1 range
-        // Update Visualisers with audio data
+        // Update Visualisers with audio data if required
         averageVolumes[c].update( scaledVol[c] ) ;
     }
     
@@ -59,40 +67,56 @@ void testApp::draw(){
     
     // Audio Visualisers
 
-    for (int c = 0; c < channelCount; c++) {
+    for (int c = 0; c < CHANNEL_COUNT; c++) {
         averageVolumes[c].draw( scaledVol[c] );
         spectrums[c].draw( chn[c] );
+        classicBars[c].draw(fftOutput[c], eqOutput[c], fft[c]->getBinSize());
     }
     
     midiVis.draw();
+        
+    // Keep an eye on frameRate
+
+    string msg = ofToString((int) ofGetFrameRate()) + " fps";
+	ofDrawBitmapString(msg, ofGetWidth() - 60, ofGetHeight() - 10);
+    
 }
 
 //--------------------------------------------------------------
 void testApp::audioIn(float * input, int bufferSize, int nChannels){	
 	
-	//lets go through each sample and calculate the root mean square which is a rough way to calculate volume	
-    for (int c = 0; c < channelCount; c++) {
+    for (int c = 0; c < nChannels; c++) {
         float curVol = 0.0;
         
         // samples are "interleaved"
         int numCounted = 0;	
         
         for (int i = 0; i < bufferSize; i++){
-            chn[c][i]	= input[i*channelCount+c]*0.5;
+            chn[c][i] = input[i*nChannels+c]*0.27;
             curVol += chn[c][i] * chn[c][i];
         }
-		numCounted+=channelCount;
+        
+		numCounted+=nChannels;
         //this is how we get the mean of rms :) 
         curVol /= (float)numCounted;
         
         // this is how we get the root of rms :) 
-        curVol = sqrt( curVol );
+        // curVol = sqrt( curVol );
         
         smoothedVol[c] *= 0.93;
         smoothedVol[c] += 0.07 * curVol;
-        // smoothedVol = curVol;
         
-	}
+        // FFT
+        
+        memcpy(audioInput[c], &input[nChannels+c], sizeof(float) * bufferSize);
+        fft[c]->setSignal(audioInput[c]);
+        memcpy(fftOutput[c], fft[c]->getAmplitude(), sizeof(float) * fft[c]->getBinSize());
+        for(int i = 0; i < fft[c]->getBinSize(); i++)
+            eqOutput[c][i] = fftOutput[c][i] * eqFunction[c][i];
+        fft[c]->setPolar(eqOutput[c], fft[c]->getPhase());
+        fft[c]->clampSignal();
+
+    }	
 }
 
 //--------------------------------------------------------------

@@ -28,14 +28,14 @@ void Spectrum::draw( vector <float> chn ) {
     ofDrawBitmapString(title, 4, 18);
     
     ofSetLineWidth(1);	
-    ofRect(0, 0, 512, 100);
+    ofRect(0, 0, 256, 100);
     
     ofSetColor(245, 58, 135);
     ofSetLineWidth(3);
     
     ofBeginShape();
     for (int i = 0; i < chn.size(); i++){
-        ofVertex((i*4)+2, 50 -chn[i]*90.0f);
+        ofVertex((i*2)+2, 50 -chn[i]*90.0f);
     }
     ofEndShape(false);
     

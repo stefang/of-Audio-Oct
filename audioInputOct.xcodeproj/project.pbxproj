@@ -11,19 +11,20 @@
 		82330E2E151677010051C598 /* ofxMidiIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82330E18151677010051C598 /* ofxMidiIn.cpp */; };
 		82330E2F151677010051C598 /* ofxMidiOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82330E1A151677010051C598 /* ofxMidiOut.cpp */; };
 		82330E3715167AF20051C598 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82330E3615167AF20051C598 /* CoreMIDI.framework */; };
-		82434DED151691300009029B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 82434DB7151691300009029B /* .gitignore */; };
-		82434DEE151691300009029B /* fftw3f.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82434DB9151691300009029B /* fftw3f.a */; };
-		82434DEF151691310009029B /* libfftw3f-3.dll in Resources */ = {isa = PBXBuildFile; fileRef = 82434DBB151691300009029B /* libfftw3f-3.dll */; };
-		82434DF0151691310009029B /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 82434DBE151691300009029B /* kiss_fft.c */; };
-		82434DF1151691310009029B /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = 82434DC0151691300009029B /* kiss_fftr.c */; };
-		82434DF2151691310009029B /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 82434DC2151691300009029B /* readme.md */; };
-		82434DF3151691310009029B /* ofxEasyFft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82434DC4151691300009029B /* ofxEasyFft.cpp */; };
-		82434DF4151691310009029B /* ofxFft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82434DC6151691300009029B /* ofxFft.cpp */; };
-		82434DF5151691310009029B /* ofxFftBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82434DC8151691300009029B /* ofxFftBasic.cpp */; };
-		82434DF6151691310009029B /* ofxFftw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82434DCA151691300009029B /* ofxFftw.cpp */; };
 		825FD476151A376D001E9013 /* averageVolume.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 825FD475151A376D001E9013 /* averageVolume.cpp */; };
 		825FD479151A4A54001E9013 /* spectrum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 825FD478151A4A54001E9013 /* spectrum.cpp */; };
+		826071011529BD1B003E6466 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 826070CE1529BD1B003E6466 /* .gitignore */; };
+		826071021529BD1B003E6466 /* fftw3f.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 826070D01529BD1B003E6466 /* fftw3f.a */; };
+		826071031529BD1B003E6466 /* libfftw3f-3.dll in Resources */ = {isa = PBXBuildFile; fileRef = 826070D21529BD1B003E6466 /* libfftw3f-3.dll */; };
+		826071041529BD1B003E6466 /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 826070D51529BD1B003E6466 /* kiss_fft.c */; };
+		826071051529BD1B003E6466 /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = 826070D71529BD1B003E6466 /* kiss_fftr.c */; };
+		826071061529BD1B003E6466 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 826070D91529BD1B003E6466 /* readme.md */; };
+		826071071529BD1B003E6466 /* ofxEasyFft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 826070DB1529BD1B003E6466 /* ofxEasyFft.cpp */; };
+		826071081529BD1B003E6466 /* ofxFft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 826070DD1529BD1B003E6466 /* ofxFft.cpp */; };
+		826071091529BD1B003E6466 /* ofxFftBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 826070DF1529BD1B003E6466 /* ofxFftBasic.cpp */; };
+		8260710A1529BD1B003E6466 /* ofxFftw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 826070E11529BD1B003E6466 /* ofxFftw.cpp */; };
 		82A69B4315166EF500EB959C /* g3.icns in Resources */ = {isa = PBXBuildFile; fileRef = 82A69B3E15166E6C00EB959C /* g3.icns */; };
+		82CC8189152A0A8500863639 /* classicFftBars.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82CC8188152A0A8500863639 /* classicFftBars.cpp */; };
 		82E58FC8151A727500E8716E /* midiBlocks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82E58FC7151A727500E8716E /* midiBlocks.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
@@ -86,30 +87,32 @@
 		82330E1A151677010051C598 /* ofxMidiOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMidiOut.cpp; sourceTree = "<group>"; };
 		82330E1B151677010051C598 /* ofxMidiOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidiOut.h; sourceTree = "<group>"; };
 		82330E3615167AF20051C598 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = /System/Library/Frameworks/CoreMIDI.framework; sourceTree = "<absolute>"; };
-		82434DB5151691300009029B /* fftw3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fftw3.h; sourceTree = "<group>"; };
-		82434DB7151691300009029B /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		82434DB9151691300009029B /* fftw3f.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = fftw3f.a; sourceTree = "<group>"; };
-		82434DBB151691300009029B /* libfftw3f-3.dll */ = {isa = PBXFileReference; lastKnownFileType = file; path = "libfftw3f-3.dll"; sourceTree = "<group>"; };
-		82434DBD151691300009029B /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
-		82434DBE151691300009029B /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fft.c; sourceTree = "<group>"; };
-		82434DBF151691300009029B /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
-		82434DC0151691300009029B /* kiss_fftr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fftr.c; sourceTree = "<group>"; };
-		82434DC1151691300009029B /* kiss_fftr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fftr.h; sourceTree = "<group>"; };
-		82434DC2151691300009029B /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.md; sourceTree = "<group>"; };
-		82434DC4151691300009029B /* ofxEasyFft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasyFft.cpp; sourceTree = "<group>"; };
-		82434DC5151691300009029B /* ofxEasyFft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasyFft.h; sourceTree = "<group>"; };
-		82434DC6151691300009029B /* ofxFft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFft.cpp; sourceTree = "<group>"; };
-		82434DC7151691300009029B /* ofxFft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFft.h; sourceTree = "<group>"; };
-		82434DC8151691300009029B /* ofxFftBasic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFftBasic.cpp; sourceTree = "<group>"; };
-		82434DC9151691300009029B /* ofxFftBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFftBasic.h; sourceTree = "<group>"; };
-		82434DCA151691300009029B /* ofxFftw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFftw.cpp; sourceTree = "<group>"; };
-		82434DCB151691300009029B /* ofxFftw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFftw.h; sourceTree = "<group>"; };
 		825FD474151A375C001E9013 /* averageVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = averageVolume.h; sourceTree = "<group>"; };
 		825FD475151A376D001E9013 /* averageVolume.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = averageVolume.cpp; sourceTree = "<group>"; };
 		825FD477151A4A48001E9013 /* spectrum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spectrum.h; sourceTree = "<group>"; };
 		825FD478151A4A54001E9013 /* spectrum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = spectrum.cpp; sourceTree = "<group>"; };
+		826070CC1529BD1B003E6466 /* fftw3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fftw3.h; sourceTree = "<group>"; };
+		826070CE1529BD1B003E6466 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		826070D01529BD1B003E6466 /* fftw3f.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = fftw3f.a; sourceTree = "<group>"; };
+		826070D21529BD1B003E6466 /* libfftw3f-3.dll */ = {isa = PBXFileReference; lastKnownFileType = file; path = "libfftw3f-3.dll"; sourceTree = "<group>"; };
+		826070D41529BD1B003E6466 /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
+		826070D51529BD1B003E6466 /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fft.c; sourceTree = "<group>"; };
+		826070D61529BD1B003E6466 /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
+		826070D71529BD1B003E6466 /* kiss_fftr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fftr.c; sourceTree = "<group>"; };
+		826070D81529BD1B003E6466 /* kiss_fftr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fftr.h; sourceTree = "<group>"; };
+		826070D91529BD1B003E6466 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.md; sourceTree = "<group>"; };
+		826070DB1529BD1B003E6466 /* ofxEasyFft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasyFft.cpp; sourceTree = "<group>"; };
+		826070DC1529BD1B003E6466 /* ofxEasyFft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasyFft.h; sourceTree = "<group>"; };
+		826070DD1529BD1B003E6466 /* ofxFft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFft.cpp; sourceTree = "<group>"; };
+		826070DE1529BD1B003E6466 /* ofxFft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFft.h; sourceTree = "<group>"; };
+		826070DF1529BD1B003E6466 /* ofxFftBasic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFftBasic.cpp; sourceTree = "<group>"; };
+		826070E01529BD1B003E6466 /* ofxFftBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFftBasic.h; sourceTree = "<group>"; };
+		826070E11529BD1B003E6466 /* ofxFftw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFftw.cpp; sourceTree = "<group>"; };
+		826070E21529BD1B003E6466 /* ofxFftw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFftw.h; sourceTree = "<group>"; };
 		82A69B3E15166E6C00EB959C /* g3.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = g3.icns; sourceTree = "<group>"; };
-		82E58FC6151A6FA000E8716E /* midiBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; path = midiBlocks.h; sourceTree = "<group>"; };
+		82CC8187152A0A7A00863639 /* classicFftBars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = classicFftBars.h; sourceTree = "<group>"; };
+		82CC8188152A0A8500863639 /* classicFftBars.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = classicFftBars.cpp; sourceTree = "<group>"; };
+		82E58FC6151A6FA000E8716E /* midiBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = midiBlocks.h; sourceTree = "<group>"; };
 		82E58FC7151A727500E8716E /* midiBlocks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = midiBlocks.cpp; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -154,7 +157,7 @@
 				E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */,
 				E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */,
 				E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */,
-				82434DEE151691300009029B /* fftw3f.a in Frameworks */,
+				826071021529BD1B003E6466 /* fftw3f.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,96 +198,6 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		82434D87151691300009029B /* ofxFft */ = {
-			isa = PBXGroup;
-			children = (
-				82434DB2151691300009029B /* libs */,
-				82434DC2151691300009029B /* readme.md */,
-				82434DC3151691300009029B /* src */,
-			);
-			name = ofxFft;
-			path = ../../../addons/ofxFft;
-			sourceTree = "<group>";
-		};
-		82434DB2151691300009029B /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				82434DB3151691300009029B /* fftw */,
-				82434DBC151691300009029B /* kiss */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
-		82434DB3151691300009029B /* fftw */ = {
-			isa = PBXGroup;
-			children = (
-				82434DB4151691300009029B /* include */,
-				82434DB6151691300009029B /* lib */,
-			);
-			path = fftw;
-			sourceTree = "<group>";
-		};
-		82434DB4151691300009029B /* include */ = {
-			isa = PBXGroup;
-			children = (
-				82434DB5151691300009029B /* fftw3.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		82434DB6151691300009029B /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				82434DB7151691300009029B /* .gitignore */,
-				82434DB8151691300009029B /* osx */,
-				82434DBA151691300009029B /* win32 */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		82434DB8151691300009029B /* osx */ = {
-			isa = PBXGroup;
-			children = (
-				82434DB9151691300009029B /* fftw3f.a */,
-			);
-			path = osx;
-			sourceTree = "<group>";
-		};
-		82434DBA151691300009029B /* win32 */ = {
-			isa = PBXGroup;
-			children = (
-				82434DBB151691300009029B /* libfftw3f-3.dll */,
-			);
-			path = win32;
-			sourceTree = "<group>";
-		};
-		82434DBC151691300009029B /* kiss */ = {
-			isa = PBXGroup;
-			children = (
-				82434DBD151691300009029B /* _kiss_fft_guts.h */,
-				82434DBE151691300009029B /* kiss_fft.c */,
-				82434DBF151691300009029B /* kiss_fft.h */,
-				82434DC0151691300009029B /* kiss_fftr.c */,
-				82434DC1151691300009029B /* kiss_fftr.h */,
-			);
-			path = kiss;
-			sourceTree = "<group>";
-		};
-		82434DC3151691300009029B /* src */ = {
-			isa = PBXGroup;
-			children = (
-				82434DC4151691300009029B /* ofxEasyFft.cpp */,
-				82434DC5151691300009029B /* ofxEasyFft.h */,
-				82434DC6151691300009029B /* ofxFft.cpp */,
-				82434DC7151691300009029B /* ofxFft.h */,
-				82434DC8151691300009029B /* ofxFftBasic.cpp */,
-				82434DC9151691300009029B /* ofxFftBasic.h */,
-				82434DCA151691300009029B /* ofxFftw.cpp */,
-				82434DCB151691300009029B /* ofxFftw.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
 		825FD46E151A3457001E9013 /* visualizers */ = {
 			isa = PBXGroup;
 			children = (
@@ -294,8 +207,100 @@
 				825FD478151A4A54001E9013 /* spectrum.cpp */,
 				82E58FC6151A6FA000E8716E /* midiBlocks.h */,
 				82E58FC7151A727500E8716E /* midiBlocks.cpp */,
+				82CC8187152A0A7A00863639 /* classicFftBars.h */,
+				82CC8188152A0A8500863639 /* classicFftBars.cpp */,
 			);
 			name = visualizers;
+			sourceTree = "<group>";
+		};
+		826070A41529BD1B003E6466 /* ofxFft */ = {
+			isa = PBXGroup;
+			children = (
+				826070C91529BD1B003E6466 /* libs */,
+				826070D91529BD1B003E6466 /* readme.md */,
+				826070DA1529BD1B003E6466 /* src */,
+			);
+			name = ofxFft;
+			path = ../../../addons/ofxFft;
+			sourceTree = "<group>";
+		};
+		826070C91529BD1B003E6466 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				826070CA1529BD1B003E6466 /* fftw */,
+				826070D31529BD1B003E6466 /* kiss */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		826070CA1529BD1B003E6466 /* fftw */ = {
+			isa = PBXGroup;
+			children = (
+				826070CB1529BD1B003E6466 /* include */,
+				826070CD1529BD1B003E6466 /* lib */,
+			);
+			path = fftw;
+			sourceTree = "<group>";
+		};
+		826070CB1529BD1B003E6466 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				826070CC1529BD1B003E6466 /* fftw3.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		826070CD1529BD1B003E6466 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				826070CE1529BD1B003E6466 /* .gitignore */,
+				826070CF1529BD1B003E6466 /* osx */,
+				826070D11529BD1B003E6466 /* win32 */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		826070CF1529BD1B003E6466 /* osx */ = {
+			isa = PBXGroup;
+			children = (
+				826070D01529BD1B003E6466 /* fftw3f.a */,
+			);
+			path = osx;
+			sourceTree = "<group>";
+		};
+		826070D11529BD1B003E6466 /* win32 */ = {
+			isa = PBXGroup;
+			children = (
+				826070D21529BD1B003E6466 /* libfftw3f-3.dll */,
+			);
+			path = win32;
+			sourceTree = "<group>";
+		};
+		826070D31529BD1B003E6466 /* kiss */ = {
+			isa = PBXGroup;
+			children = (
+				826070D41529BD1B003E6466 /* _kiss_fft_guts.h */,
+				826070D51529BD1B003E6466 /* kiss_fft.c */,
+				826070D61529BD1B003E6466 /* kiss_fft.h */,
+				826070D71529BD1B003E6466 /* kiss_fftr.c */,
+				826070D81529BD1B003E6466 /* kiss_fftr.h */,
+			);
+			path = kiss;
+			sourceTree = "<group>";
+		};
+		826070DA1529BD1B003E6466 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				826070DB1529BD1B003E6466 /* ofxEasyFft.cpp */,
+				826070DC1529BD1B003E6466 /* ofxEasyFft.h */,
+				826070DD1529BD1B003E6466 /* ofxFft.cpp */,
+				826070DE1529BD1B003E6466 /* ofxFft.h */,
+				826070DF1529BD1B003E6466 /* ofxFftBasic.cpp */,
+				826070E01529BD1B003E6466 /* ofxFftBasic.h */,
+				826070E11529BD1B003E6466 /* ofxFftw.cpp */,
+				826070E21529BD1B003E6466 /* ofxFftw.h */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		82A69B3D15166DD800EB959C /* Resources */ = {
@@ -309,7 +314,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				82434D87151691300009029B /* ofxFft */,
+				826070A41529BD1B003E6466 /* ofxFft */,
 				82330DF5151677010051C598 /* ofxMidi */,
 			);
 			name = addons;
@@ -464,9 +469,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				82A69B4315166EF500EB959C /* g3.icns in Resources */,
-				82434DED151691300009029B /* .gitignore in Resources */,
-				82434DEF151691310009029B /* libfftw3f-3.dll in Resources */,
-				82434DF2151691310009029B /* readme.md in Resources */,
+				826071011529BD1B003E6466 /* .gitignore in Resources */,
+				826071031529BD1B003E6466 /* libfftw3f-3.dll in Resources */,
+				826071061529BD1B003E6466 /* readme.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,15 +503,16 @@
 				82330E2C151677010051C598 /* RtMidi.cpp in Sources */,
 				82330E2E151677010051C598 /* ofxMidiIn.cpp in Sources */,
 				82330E2F151677010051C598 /* ofxMidiOut.cpp in Sources */,
-				82434DF0151691310009029B /* kiss_fft.c in Sources */,
-				82434DF1151691310009029B /* kiss_fftr.c in Sources */,
-				82434DF3151691310009029B /* ofxEasyFft.cpp in Sources */,
-				82434DF4151691310009029B /* ofxFft.cpp in Sources */,
-				82434DF5151691310009029B /* ofxFftBasic.cpp in Sources */,
-				82434DF6151691310009029B /* ofxFftw.cpp in Sources */,
 				825FD476151A376D001E9013 /* averageVolume.cpp in Sources */,
 				825FD479151A4A54001E9013 /* spectrum.cpp in Sources */,
 				82E58FC8151A727500E8716E /* midiBlocks.cpp in Sources */,
+				826071041529BD1B003E6466 /* kiss_fft.c in Sources */,
+				826071051529BD1B003E6466 /* kiss_fftr.c in Sources */,
+				826071071529BD1B003E6466 /* ofxEasyFft.cpp in Sources */,
+				826071081529BD1B003E6466 /* ofxFft.cpp in Sources */,
+				826071091529BD1B003E6466 /* ofxFftBasic.cpp in Sources */,
+				8260710A1529BD1B003E6466 /* ofxFftw.cpp in Sources */,
+				82CC8189152A0A8500863639 /* classicFftBars.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,8 +664,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../addons/ofxFft/libs/fftw/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../addons/ofxFft/libs/fftw/lib/osx\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = audioInputOctDebug;
 				WRAPPER_EXTENSION = app;
@@ -746,8 +754,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../addons/ofxFft/libs/fftw/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../addons/ofxFft/libs/fftw/lib/osx\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = audioInputOct;
 				WRAPPER_EXTENSION = app;

@@ -1,15 +1,20 @@
 #ifndef _TEST_APP
 #define _TEST_APP
 
+#define BUFFER_SIZE 128
+#define CHANNEL_COUNT 2
 
 #include "ofMain.h"
+
 #include "ofxMidi.h"
+#include "ofxFft.h"
 
 // Visualizer Classes
 
 #include "averageVolume.h"
 #include "spectrum.h"
 #include "midiBlocks.h"
+#include "classicFftBars.h"
 
 // public ofxMidiListener
 class testApp : public ofBaseApp, public ofxMidiListener {
@@ -32,8 +37,16 @@ class testApp : public ofBaseApp, public ofxMidiListener {
             
     int channelCount;
     void audioIn(float * input, int bufferSize, int nChannels); 
-
+    
     vector <float> chn[6];
+    
+    ofxFft* fft[6];
+    
+    float* audioInput[6];
+	float* fftOutput[6];
+	float* eqFunction[6];
+	float* eqOutput[6];
+	float* ifftOutput[6];
             
     float smoothedVol[6];
     float scaledVol[6];
@@ -49,11 +62,12 @@ class testApp : public ofBaseApp, public ofxMidiListener {
 
     ofxMidiIn midiIn;
     ofSoundStream soundStream;
-
+        
     // Visualizers
 
     vector<AverageVolume> averageVolumes; 
-    vector<Spectrum> spectrums;
+    vector<Spectrum> spectrums;    
+    vector<ClassicFftBars> classicBars;    
     
     MidiBlocks midiVis;
     
