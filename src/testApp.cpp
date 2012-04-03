@@ -13,21 +13,30 @@ void testApp::setup(){
 	
 	soundStream.listDevices();
 	soundStream.setDeviceID(1);
+    audioInputSetup();
+
+    midiVis.setup();
+    
+}
+
+void testApp::audioInputSetup() {
+    
     // x output channels, 
 	// x input channels
 	// x samples per second
 	// x samples per buffer
 	// x num buffers (latency)
+
     soundStream.setup(this, 0, CHANNEL_COUNT, 44100, BUFFER_SIZE, 2);
-    	
+    
     for (int c = 0; c < CHANNEL_COUNT; c++) {
         chn[c].assign(BUFFER_SIZE, 0.0);
         smoothedVol[c] = 0.0;
         scaledVol[c] = 0.0;
-                
+        
         fft[c] = ofxFft::create(BUFFER_SIZE, OF_FFT_WINDOW_BARTLETT);
         // To use with FFTW, try:
-        // fft = ofxFft::create(BUFFER_SIZE, OF_FFT_WINDOW_BARTLETT, OF_FFT_FFTW);
+        //fft[c] = ofxFft::create(BUFFER_SIZE, OF_FFT_WINDOW_BARTLETT, OF_FFT_FFTW);
         audioInput[c] = new float[BUFFER_SIZE];
         fftOutput[c] = new float[fft[c]->getBinSize()];
         eqFunction[c] = new float[fft[c]->getBinSize()];
@@ -42,18 +51,16 @@ void testApp::setup(){
         FFTanalyzer[c].setup(44100, BUFFER_SIZE/CHANNEL_COUNT, 1);
         FFTanalyzer[c].peakHoldTime = 15; // hold longer
         FFTanalyzer[c].peakDecayRate = 0.95f; // decay slower
-        FFTanalyzer[c].linearEQIntercept = 0.4f; // reduced gain at lowest frequency
-        FFTanalyzer[c].linearEQSlope = 0.3f; // increasing gain at higher frequencies
-
+        FFTanalyzer[c].linearEQIntercept = 0.3f; // reduced gain at lowest frequency
+        FFTanalyzer[c].linearEQSlope = 0.4f; // increasing gain at higher frequencies
+        
         // Create Visualisers
         spectrums.push_back( Spectrum(ofVec2f(20,(c*100+50)), c));
         classicBars.push_back( ClassicFftBars(ofVec2f(296,(c*100+50)), c));
         averageVolumes.push_back( AverageVolume(ofVec2f(856,(c*100+50))));
         octaveEqs.push_back( Octaves(ofVec2f(1276,(c*100+50)), c));
-
+        
     }
-
-    midiVis.setup();
     
 }
 
@@ -144,6 +151,16 @@ void testApp::keyPressed  (int key){
 	if( key == 'e' ){
 		soundStream.stop();
 	}
+    
+    
+    if ( (int)key > 47 && (int)key < 58)
+    {
+        cout << key;
+		soundStream.stop();
+        soundStream.close();
+        soundStream.setDeviceID(((int)key) - 49);
+        audioInputSetup();
+    }
 }
 
 //--------------------------------------------------------------
@@ -159,8 +176,7 @@ void testApp::newMidiMessage(ofxMidiEventArgs& eventArgs) {
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){ 
-	
+void testApp::keyReleased(int key){ 	
 }
 
 //--------------------------------------------------------------

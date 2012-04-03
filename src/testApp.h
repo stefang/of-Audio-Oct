@@ -39,20 +39,21 @@ class testApp : public ofBaseApp, public ofxMidiListener {
             
     int channelCount;
     void audioIn(float * input, int bufferSize, int nChannels); 
+    void audioInputSetup();
     
-    vector <float> chn[6];
+    vector <float> chn[CHANNEL_COUNT];
     
-    ofxFft* fft[6];
-    FFTOctaveAnalyzer FFTanalyzer[6];
+    ofxFft* fft[CHANNEL_COUNT];
+    FFTOctaveAnalyzer FFTanalyzer[CHANNEL_COUNT];
     
-    float* audioInput[6];
-	float* fftOutput[6];
-	float* eqFunction[6];
-	float* eqOutput[6];
-	float* ifftOutput[6];
+    float* audioInput[CHANNEL_COUNT];
+	float* fftOutput[CHANNEL_COUNT];
+	float* eqFunction[CHANNEL_COUNT];
+	float* eqOutput[CHANNEL_COUNT];
+	float* ifftOutput[CHANNEL_COUNT];
             
-    float smoothedVol[6];
-    float scaledVol[6];
+    float smoothedVol[CHANNEL_COUNT];
+    float scaledVol[CHANNEL_COUNT];
     
     void newMidiMessage(ofxMidiEventArgs& eventArgs);
 
