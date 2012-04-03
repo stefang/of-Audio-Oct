@@ -12,7 +12,7 @@ void testApp::setup(){
 	midiIn.addListener(this);
 	
 	soundStream.listDevices();
-	soundStream.setDeviceID(0);
+	soundStream.setDeviceID(1);
     // x output channels, 
 	// x input channels
 	// x samples per second
@@ -36,7 +36,7 @@ void testApp::setup(){
         ifftOutput[c] = new float[BUFFER_SIZE];
         
         for(int i = 0; i < fft[c]->getBinSize(); i++)
-            eqFunction[c][i] = (float) (fft[c]->getBinSize() - i) / (float) fft[c]->getBinSize();
+            eqFunction[c][i] = (float) (fft[c]->getBinSize() - i) / (float) (fft[c]->getBinSize());
         
         // Create Visualisers
         spectrums.push_back( Spectrum(ofVec2f(20,(c*100+50)), c));
@@ -92,8 +92,13 @@ void testApp::audioIn(float * input, int bufferSize, int nChannels){
         int numCounted = 0;	
         
         for (int i = 0; i < bufferSize; i++){
-            chn[c][i] = input[i*nChannels+c]*0.27;
+            chn[c][i] = input[i*nChannels+c]*0.26;
             curVol += chn[c][i] * chn[c][i];
+            
+            // fft
+            
+            audioInput[c][i] = input[i*nChannels+c]*0.48;
+            
         }
         
 		numCounted+=nChannels;
@@ -103,12 +108,12 @@ void testApp::audioIn(float * input, int bufferSize, int nChannels){
         // this is how we get the root of rms :) 
         // curVol = sqrt( curVol );
         
-        smoothedVol[c] *= 0.93;
+        smoothedVol[c] *= 0.83;
         smoothedVol[c] += 0.07 * curVol;
         
         // FFT
         
-        memcpy(audioInput[c], &input[nChannels+c], sizeof(float) * bufferSize);
+//        memcpy(audioInput[c], &input[nChannels+c], sizeof(float) * bufferSize);
         fft[c]->setSignal(audioInput[c]);
         memcpy(fftOutput[c], fft[c]->getAmplitude(), sizeof(float) * fft[c]->getBinSize());
         for(int i = 0; i < fft[c]->getBinSize(); i++)
