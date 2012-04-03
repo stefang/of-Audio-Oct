@@ -8,6 +8,7 @@
 
 #include "ofxMidi.h"
 #include "ofxFft.h"
+#include "FFTOctaveAnalyzer.h"
 
 // Visualizer Classes
 
@@ -15,6 +16,7 @@
 #include "spectrum.h"
 #include "midiBlocks.h"
 #include "classicFftBars.h"
+#include "octaves.h"
 
 // public ofxMidiListener
 class testApp : public ofBaseApp, public ofxMidiListener {
@@ -41,6 +43,7 @@ class testApp : public ofBaseApp, public ofxMidiListener {
     vector <float> chn[6];
     
     ofxFft* fft[6];
+    FFTOctaveAnalyzer FFTanalyzer[6];
     
     float* audioInput[6];
 	float* fftOutput[6];
@@ -68,6 +71,7 @@ class testApp : public ofBaseApp, public ofxMidiListener {
     vector<AverageVolume> averageVolumes; 
     vector<Spectrum> spectrums;    
     vector<ClassicFftBars> classicBars;    
+    vector<Octaves> octaveEqs;    
     
     MidiBlocks midiVis;
     

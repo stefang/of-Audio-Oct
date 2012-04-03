@@ -28,7 +28,6 @@ void testApp::setup(){
         fft[c] = ofxFft::create(BUFFER_SIZE, OF_FFT_WINDOW_BARTLETT);
         // To use with FFTW, try:
         // fft = ofxFft::create(BUFFER_SIZE, OF_FFT_WINDOW_BARTLETT, OF_FFT_FFTW);
-        
         audioInput[c] = new float[BUFFER_SIZE];
         fftOutput[c] = new float[fft[c]->getBinSize()];
         eqFunction[c] = new float[fft[c]->getBinSize()];
@@ -38,10 +37,20 @@ void testApp::setup(){
         for(int i = 0; i < fft[c]->getBinSize(); i++)
             eqFunction[c][i] = (float) (fft[c]->getBinSize() - i) / (float) (fft[c]->getBinSize());
         
+        // Octave
+        
+        FFTanalyzer[c].setup(44100, BUFFER_SIZE/CHANNEL_COUNT, 1);
+        FFTanalyzer[c].peakHoldTime = 15; // hold longer
+        FFTanalyzer[c].peakDecayRate = 0.95f; // decay slower
+        FFTanalyzer[c].linearEQIntercept = 0.4f; // reduced gain at lowest frequency
+        FFTanalyzer[c].linearEQSlope = 0.3f; // increasing gain at higher frequencies
+
         // Create Visualisers
         spectrums.push_back( Spectrum(ofVec2f(20,(c*100+50)), c));
         classicBars.push_back( ClassicFftBars(ofVec2f(296,(c*100+50)), c));
         averageVolumes.push_back( AverageVolume(ofVec2f(856,(c*100+50))));
+        octaveEqs.push_back( Octaves(ofVec2f(1276,(c*100+50)), c));
+
     }
 
     midiVis.setup();
@@ -54,7 +63,9 @@ void testApp::update(){
     for (int c = 0; c < CHANNEL_COUNT; c++) {
         scaledVol[c] = ofMap(smoothedVol[c], 0.0, 0.17, 0.0, 1.0, true); // scale the vol up to a 0-1 range
         // Update Visualisers with audio data if required
-        averageVolumes[c].update( scaledVol[c] ) ;
+        averageVolumes[c].update( scaledVol[c] );
+        
+        FFTanalyzer[c].calculate(eqOutput[c]);
     }
     
 }
@@ -71,6 +82,7 @@ void testApp::draw(){
         averageVolumes[c].draw( scaledVol[c] );
         spectrums[c].draw( chn[c] );
         classicBars[c].draw(fftOutput[c], eqOutput[c], fft[c]->getBinSize());
+        octaveEqs[c].draw(FFTanalyzer[c].nAverages, FFTanalyzer[c].averages, FFTanalyzer[c].peaks);
     }
     
     midiVis.draw();
@@ -113,7 +125,6 @@ void testApp::audioIn(float * input, int bufferSize, int nChannels){
         
         // FFT
         
-//        memcpy(audioInput[c], &input[nChannels+c], sizeof(float) * bufferSize);
         fft[c]->setSignal(audioInput[c]);
         memcpy(fftOutput[c], fft[c]->getAmplitude(), sizeof(float) * fft[c]->getBinSize());
         for(int i = 0; i < fft[c]->getBinSize(); i++)

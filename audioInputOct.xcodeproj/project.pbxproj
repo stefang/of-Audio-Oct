@@ -24,6 +24,8 @@
 		826071091529BD1B003E6466 /* ofxFftBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 826070DF1529BD1B003E6466 /* ofxFftBasic.cpp */; };
 		8260710A1529BD1B003E6466 /* ofxFftw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 826070E11529BD1B003E6466 /* ofxFftw.cpp */; };
 		82A69B4315166EF500EB959C /* g3.icns in Resources */ = {isa = PBXBuildFile; fileRef = 82A69B3E15166E6C00EB959C /* g3.icns */; };
+		82AE1D2A152B0C6300D5055F /* fftOctaveAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82AE1D28152B0C6300D5055F /* fftOctaveAnalyzer.cpp */; };
+		82AE1D2D152B0E0C00D5055F /* octaves.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82AE1D2C152B0E0C00D5055F /* octaves.cpp */; };
 		82CC8189152A0A8500863639 /* classicFftBars.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82CC8188152A0A8500863639 /* classicFftBars.cpp */; };
 		82E58FC8151A727500E8716E /* midiBlocks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82E58FC7151A727500E8716E /* midiBlocks.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
@@ -110,6 +112,10 @@
 		826070E11529BD1B003E6466 /* ofxFftw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFftw.cpp; sourceTree = "<group>"; };
 		826070E21529BD1B003E6466 /* ofxFftw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFftw.h; sourceTree = "<group>"; };
 		82A69B3E15166E6C00EB959C /* g3.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = g3.icns; sourceTree = "<group>"; };
+		82AE1D28152B0C6300D5055F /* fftOctaveAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fftOctaveAnalyzer.cpp; sourceTree = "<group>"; };
+		82AE1D29152B0C6300D5055F /* fftOctaveAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fftOctaveAnalyzer.h; sourceTree = "<group>"; };
+		82AE1D2B152B0E0200D5055F /* octaves.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = octaves.h; sourceTree = "<group>"; };
+		82AE1D2C152B0E0C00D5055F /* octaves.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = octaves.cpp; sourceTree = "<group>"; };
 		82CC8187152A0A7A00863639 /* classicFftBars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = classicFftBars.h; sourceTree = "<group>"; };
 		82CC8188152A0A8500863639 /* classicFftBars.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = classicFftBars.cpp; sourceTree = "<group>"; };
 		82E58FC6151A6FA000E8716E /* midiBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = midiBlocks.h; sourceTree = "<group>"; };
@@ -209,6 +215,8 @@
 				82E58FC7151A727500E8716E /* midiBlocks.cpp */,
 				82CC8187152A0A7A00863639 /* classicFftBars.h */,
 				82CC8188152A0A8500863639 /* classicFftBars.cpp */,
+				82AE1D2B152B0E0200D5055F /* octaves.h */,
+				82AE1D2C152B0E0C00D5055F /* octaves.cpp */,
 			);
 			name = visualizers;
 			sourceTree = "<group>";
@@ -382,6 +390,8 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				82AE1D28152B0C6300D5055F /* fftOctaveAnalyzer.cpp */,
+				82AE1D29152B0C6300D5055F /* fftOctaveAnalyzer.h */,
 				825FD46E151A3457001E9013 /* visualizers */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
@@ -513,6 +523,8 @@
 				826071091529BD1B003E6466 /* ofxFftBasic.cpp in Sources */,
 				8260710A1529BD1B003E6466 /* ofxFftw.cpp in Sources */,
 				82CC8189152A0A8500863639 /* classicFftBars.cpp in Sources */,
+				82AE1D2A152B0C6300D5055F /* fftOctaveAnalyzer.cpp in Sources */,
+				82AE1D2D152B0E0C00D5055F /* octaves.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
