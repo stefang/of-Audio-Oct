@@ -14,6 +14,7 @@ MidiBlocks::MidiBlocks() {
 void MidiBlocks::setup() {
     width = ofGetViewportWidth();
     blockSize = (int)((width - 12) / 127);
+    colour.setHsb(0, 255, 255);
 }
 
 void MidiBlocks::update(int value) {
@@ -27,7 +28,7 @@ void MidiBlocks::draw() {
     ofSetColor(225);
     for (int i = 0; i < 127; i++) {
         if (notes[i]==true) {
-            ofSetColor(245, 58, 135);
+            ofSetColor(colour);
         } else {
             ofSetColor(10, 10, 10);
         }

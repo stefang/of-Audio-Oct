@@ -12,6 +12,7 @@ AverageVolume::AverageVolume() {
 }
 
 void AverageVolume::setup() {
+    colour.setHsb(0, 255, 255);
 }
 
 void AverageVolume::update(float scaledVol) {
@@ -36,7 +37,7 @@ void AverageVolume::draw(float scaledVol) {
     ofDrawBitmapString("Scaled average vol (0-100): " + ofToString(scaledVol * 100.0, 0), 4, 18);
     ofRect(0, 0, 400, 100);
     
-    ofSetColor(245, 58, 135);
+    ofSetColor(colour);
     ofFill();		
     ofCircle(50, 50, scaledVol * 25.0f);
 

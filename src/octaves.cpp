@@ -12,6 +12,7 @@ Octaves::Octaves() {
 }
 
 void Octaves::setup() {
+    colour.setHsb(0, 255, 255);
 }
 
 void Octaves::draw(int nAverages, float* averages, float* peaks) {
@@ -33,7 +34,7 @@ void Octaves::draw(int nAverages, float* averages, float* peaks) {
 		ofRect(i*22,(-peaks[i] * 220)+95,20,-1);
 	}
 
-    ofSetColor(245, 58, 135);
+    ofSetColor(colour);
     for (int i = 0; i < nAverages; i++){
 		ofRect(i*22,95,20,-averages[i] * 220 -1);
 	}

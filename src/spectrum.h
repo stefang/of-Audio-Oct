@@ -31,6 +31,8 @@ class Spectrum
     int channel;
     
     ofVec2f position;
+    ofColor colour;
+
     
 };
 

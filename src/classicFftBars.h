@@ -37,6 +37,8 @@ class ClassicFftBars
     int channel;
     char title[255];
     
+    ofColor colour;
+    
 };
 
 #endif

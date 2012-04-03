@@ -5,21 +5,53 @@ void testApp::setup(){
 	
 	ofSetVerticalSync(true);
 	ofSetCircleResolution(80);
-	ofBackground(54, 54, 54);	
-    
-    midiIn.listPorts();
-	midiIn.openPort(1);
-	midiIn.addListener(this);
+	ofBackground(54, 54, 54);
 	
-	soundStream.listDevices();
-	soundStream.setDeviceID(1);
-    audioInputSetup();
+    gui = new ofxUICanvas(10,ofGetViewportHeight()-55,ofGetViewportWidth()-20,55);
+    
+    vector<string> audio_inputs; 
+    audio_inputs.push_back("0");
+    audio_inputs.push_back("1");
+    audio_inputs.push_back("2");
+    audio_inputs.push_back("3");
+    audio_inputs.push_back("4");
+    audio_inputs.push_back("5");
+    audio_inputs.push_back("6");
+
+    vector<string> midi_inputs; 
+    for (int i = 0; i < midiIn.portNames.size(); i++) {
+        midi_inputs.push_back(ofToString(i));
+    }
+    
+    gui->addWidgetRight(new ofxUIRadio( 10, 10, "Audio Input", audio_inputs, OFX_UI_ORIENTATION_HORIZONTAL));
+    gui->addWidgetRight(new ofxUIRadio( 10, 10, "MIDI Input", midi_inputs, OFX_UI_ORIENTATION_HORIZONTAL));
+    
+    ofAddListener(gui->newGUIEvent, this, &testApp::guiEvent); 
+    gui->loadSettings("GUI/guiSettings.xml"); 
+    
+//    midiIn.listPorts();
+//	midiIn.openPort(0);
+//	midiIn.addListener(this);
+	
+//	soundStream.listDevices();
+//	soundStream.setDeviceID(1);
+//    audioInputSetup();
+    
+    // Setup default colour
+    for (int c = 0; c < CHANNEL_COUNT; c++) {
+        spectrums[c].setup();
+        classicBars[c].setup();
+        averageVolumes[c].setup();
+        octaveEqs[c].setup();
+    }
 
     midiVis.setup();
-    
+        
 }
 
 void testApp::audioInputSetup() {
+    
+    cout << "Audio Setup";
     
     // x output channels, 
 	// x input channels
@@ -59,7 +91,7 @@ void testApp::audioInputSetup() {
         classicBars.push_back( ClassicFftBars(ofVec2f(296,(c*100+50)), c));
         averageVolumes.push_back( AverageVolume(ofVec2f(856,(c*100+50))));
         octaveEqs.push_back( Octaves(ofVec2f(1276,(c*100+50)), c));
-        
+
     }
     
 }
@@ -144,23 +176,6 @@ void testApp::audioIn(float * input, int bufferSize, int nChannels){
 
 //--------------------------------------------------------------
 void testApp::keyPressed  (int key){ 
-	if( key == 's' ){
-		soundStream.start();
-	}
-	
-	if( key == 'e' ){
-		soundStream.stop();
-	}
-    
-    
-    if ( (int)key > 47 && (int)key < 58)
-    {
-        cout << key;
-		soundStream.stop();
-        soundStream.close();
-        soundStream.setDeviceID(((int)key) - 49);
-        audioInputSetup();
-    }
 }
 
 //--------------------------------------------------------------
@@ -172,6 +187,15 @@ void testApp::newMidiMessage(ofxMidiEventArgs& eventArgs) {
 	port = eventArgs.port;
 	timestamp = eventArgs.timestamp;
     midiVis.update(value);
+    midiVis.colour.setHue(value);
+    
+    for (int c = 0; c < CHANNEL_COUNT; c++) {
+        spectrums[c].colour.setHue(value);
+        classicBars[c].colour.setHue(value);
+        averageVolumes[c].colour.setHue(value);
+        octaveEqs[c].colour.setHue(value);
+    }
+
     
 }
 
@@ -214,3 +238,31 @@ void testApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
+void testApp::guiEvent(ofxUIEventArgs &e)
+{
+    
+    if (e.widget->getParent()->getName() == "Audio Input") {
+        soundStream.stop();
+        soundStream.close();
+        ofxUIToggle *toggle = (ofxUIToggle *) e.widget;
+        if (toggle->getValue() == 1)
+            soundStream.setDeviceID(ofToInt(e.widget->getName()));
+        audioInputSetup();
+    }
+    
+    if (e.widget->getParent()->getName() == "MIDI Input") {
+        midiIn.removeListener(this);
+        midiIn.closePort();
+        ofxUIToggle *toggle = (ofxUIToggle *) e.widget;
+        if (toggle->getValue() == 1)
+            midiIn.openPort(ofToInt(e.widget->getName()));
+        midiIn.addListener(this);
+    }
+    
+}
+
+void testApp::exit()
+{
+    gui->saveSettings("GUI/guiSettings.xml");     
+    delete gui; 	
+}

@@ -12,6 +12,7 @@ ClassicFftBars::ClassicFftBars() {
 }
 
 void ClassicFftBars::setup() {
+    colour.setHsb(0, 255, 255);
 }
 
 void ClassicFftBars::draw(float* fftOutput, float* eqOutput, int fftBinSize) {
@@ -40,7 +41,7 @@ void ClassicFftBars::plot(float* array, int length, float scale, float offset) {
 	ofPushMatrix();
 	ofTranslate(4, (plotHeight / 2 + offset) -3, 0);
     ofPushStyle();
-    ofSetColor(245, 58, 135);
+    ofSetColor(colour);
     ofFill();
     for (int i = 0; i < length; i++)
         ofRect(i*4, 0, 3, (array[i] * scale) - 1);

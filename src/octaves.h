@@ -29,6 +29,8 @@ class Octaves
     int channel;
     char title[255];
     
+    ofColor colour;
+    
 };
 
 

@@ -12,6 +12,7 @@ Spectrum::Spectrum() {
 }
 
 void Spectrum::setup() {
+    colour.setHsb(0, 255, 255);
 }
 
 void Spectrum::update() {
@@ -30,7 +31,7 @@ void Spectrum::draw( vector <float> chn ) {
     ofSetLineWidth(1);	
     ofRect(0, 0, 256, 100);
     
-    ofSetColor(245, 58, 135);
+    ofSetColor(colour);
     ofSetLineWidth(3);
     
     ofBeginShape();

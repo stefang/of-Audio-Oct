@@ -5,6 +5,7 @@
 #define CHANNEL_COUNT 2
 
 #include "ofMain.h"
+#include "ofxUI.h"
 
 #include "ofxMidi.h"
 #include "ofxFft.h"
@@ -36,6 +37,11 @@ class testApp : public ofBaseApp, public ofxMidiListener {
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+    
+    void exit(); 
+    void guiEvent(ofxUIEventArgs &e);
+    
+    ofxUICanvas *gui;
             
     int channelCount;
     void audioIn(float * input, int bufferSize, int nChannels); 

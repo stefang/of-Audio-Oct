@@ -26,6 +26,9 @@ class MidiBlocks
     int width;
     int blockSize;
     
+    ofColor colour;
+
+    
 };
 
 #endif

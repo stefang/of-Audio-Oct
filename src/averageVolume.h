@@ -30,6 +30,7 @@ class AverageVolume
     vector <float> volHistory;
     
     ofVec2f position;
+    ofColor colour;
     
 };
 
