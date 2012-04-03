@@ -17,7 +17,7 @@ void testApp::setup(){
     audio_inputs.push_back("4");
     audio_inputs.push_back("5");
     audio_inputs.push_back("6");
-
+    
     vector<string> midi_inputs; 
     for (int i = 0; i < midiIn.portNames.size(); i++) {
         midi_inputs.push_back(ofToString(i));
@@ -27,16 +27,8 @@ void testApp::setup(){
     gui->addWidgetRight(new ofxUIRadio( 10, 10, "MIDI Input", midi_inputs, OFX_UI_ORIENTATION_HORIZONTAL));
     
     ofAddListener(gui->newGUIEvent, this, &testApp::guiEvent); 
-    gui->loadSettings("GUI/guiSettings.xml"); 
-    
-//    midiIn.listPorts();
-//	midiIn.openPort(0);
-//	midiIn.addListener(this);
-	
-//	soundStream.listDevices();
-//	soundStream.setDeviceID(1);
-//    audioInputSetup();
-    
+    gui->loadSettings("GUI/guiSettings.xml"); // this triggers the audio and midi setup as well as the setting load
+        
     // Setup default colour
     for (int c = 0; c < CHANNEL_COUNT; c++) {
         spectrums[c].setup();
@@ -51,36 +43,60 @@ void testApp::setup(){
 
 void testApp::audioInputSetup() {
     
-    cout << "Audio Setup";
-    
     // x output channels, 
 	// x input channels
 	// x samples per second
 	// x samples per buffer
 	// x num buffers (latency)
-
+    
     soundStream.setup(this, 0, CHANNEL_COUNT, 44100, BUFFER_SIZE, 2);
+
+    // Clear all vectors...
+    
+    // First the visualizers to try and prevent glitches
+    
+    spectrums.clear();
+    classicBars.clear();
+    averageVolumes.clear();
+    octaveEqs.clear();
+
+    // Then everything else
+    
+    smoothedVol.clear();
+    scaledVol.clear();
+
+    fft.clear();
+    audioInput.clear();
+    fftOutput.clear();
+    eqFunction.clear();
+    eqOutput.clear();
+    ifftOutput.clear();
+    
+    // Build them again
     
     for (int c = 0; c < CHANNEL_COUNT; c++) {
-        chn[c].assign(BUFFER_SIZE, 0.0);
-        smoothedVol[c] = 0.0;
-        scaledVol[c] = 0.0;
+
+        // chn.push_back(new float[BUFFER_SIZE]);
         
-        fft[c] = ofxFft::create(BUFFER_SIZE, OF_FFT_WINDOW_BARTLETT);
-        // To use with FFTW, try:
-        //fft[c] = ofxFft::create(BUFFER_SIZE, OF_FFT_WINDOW_BARTLETT, OF_FFT_FFTW);
-        audioInput[c] = new float[BUFFER_SIZE];
-        fftOutput[c] = new float[fft[c]->getBinSize()];
-        eqFunction[c] = new float[fft[c]->getBinSize()];
-        eqOutput[c] = new float[fft[c]->getBinSize()];
-        ifftOutput[c] = new float[BUFFER_SIZE];
+        chn[c].assign(BUFFER_SIZE, 0.0f);
+        
+        smoothedVol.push_back(0.0);
+        scaledVol.push_back(0.0);
+        
+        fft.push_back(ofxFft::create(BUFFER_SIZE, OF_FFT_WINDOW_BARTLETT));
+
+        audioInput.push_back(new float[BUFFER_SIZE]);
+        fftOutput.push_back(new float[fft[c]->getBinSize()]);
+        eqFunction.push_back(new float[fft[c]->getBinSize()]);
+        eqOutput.push_back(new float[fft[c]->getBinSize()]);
+        ifftOutput.push_back(new float[BUFFER_SIZE]);
         
         for(int i = 0; i < fft[c]->getBinSize(); i++)
             eqFunction[c][i] = (float) (fft[c]->getBinSize() - i) / (float) (fft[c]->getBinSize());
         
         // Octave
         
-        FFTanalyzer[c].setup(44100, BUFFER_SIZE/CHANNEL_COUNT, 1);
+        FFTanalyzer[c].FFTOctaveAnalyzer::setup(44100, BUFFER_SIZE/CHANNEL_COUNT, 1);
         FFTanalyzer[c].peakHoldTime = 15; // hold longer
         FFTanalyzer[c].peakDecayRate = 0.95f; // decay slower
         FFTanalyzer[c].linearEQIntercept = 0.3f; // reduced gain at lowest frequency
@@ -238,6 +254,7 @@ void testApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
+//--------------------------------------------------------------
 void testApp::guiEvent(ofxUIEventArgs &e)
 {
     
@@ -261,6 +278,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
     
 }
 
+//--------------------------------------------------------------
 void testApp::exit()
 {
     gui->saveSettings("GUI/guiSettings.xml");     

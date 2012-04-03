@@ -35,7 +35,10 @@ void Spectrum::draw( vector <float> chn ) {
     ofSetLineWidth(3);
     
     ofBeginShape();
+    
     for (int i = 0; i < chn.size(); i++){
+//    for (int i = 0; i < sizeof(chn); i++){
+
         ofVertex((i*2)+2, 50 -chn[i]*90.0f);
     }
     ofEndShape(false);

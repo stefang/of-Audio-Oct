@@ -38,7 +38,7 @@ class testApp : public ofBaseApp, public ofxMidiListener {
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    void exit(); 
+    void exit();
     void guiEvent(ofxUIEventArgs &e);
     
     ofxUICanvas *gui;
@@ -48,18 +48,23 @@ class testApp : public ofBaseApp, public ofxMidiListener {
     void audioInputSetup();
     
     vector <float> chn[CHANNEL_COUNT];
+
+    // vector< vector<float> > chn;
+    // vector< vector<float> > chn;
+    // vector <float*> chn;
     
-    ofxFft* fft[CHANNEL_COUNT];
+    vector <ofxFft*> fft;
     FFTOctaveAnalyzer FFTanalyzer[CHANNEL_COUNT];
+    // vector <FFTOctaveAnalyzer*> FFTanalyzer;
     
-    float* audioInput[CHANNEL_COUNT];
-	float* fftOutput[CHANNEL_COUNT];
-	float* eqFunction[CHANNEL_COUNT];
-	float* eqOutput[CHANNEL_COUNT];
-	float* ifftOutput[CHANNEL_COUNT];
+    vector <float*> audioInput;
+	vector <float*> fftOutput;
+	vector <float*> eqFunction;
+	vector <float*> eqOutput;
+	vector <float*> ifftOutput;
             
-    float smoothedVol[CHANNEL_COUNT];
-    float scaledVol[CHANNEL_COUNT];
+    vector <float> smoothedVol;
+    vector <float> scaledVol;
     
     void newMidiMessage(ofxMidiEventArgs& eventArgs);
 
