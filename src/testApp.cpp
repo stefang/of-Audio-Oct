@@ -9,28 +9,39 @@ void testApp::setup(){
 	
     gui = new ofxUICanvas(10,ofGetViewportHeight()-55,ofGetViewportWidth()-20,55);
     
-    vector<string> audio_inputs; 
-    audio_inputs.push_back("0");
-    audio_inputs.push_back("1");
-    audio_inputs.push_back("2");
-    audio_inputs.push_back("3");
-    audio_inputs.push_back("4");
-    audio_inputs.push_back("5");
-    audio_inputs.push_back("6");
+    vector<string> audio_inputs_ui; 
     
-    vector<string> midi_inputs; 
-    for (int i = 0; i < midiIn.portNames.size(); i++) {
-        midi_inputs.push_back(ofToString(i));
+    try {  
+        audioTemp = ofPtr<RtAudio>(new RtAudio());  
+    } catch (RtError &error) {  
+        error.printMessage();  
+        return;  
     }
     
-    gui->addWidgetRight(new ofxUIRadio( 10, 10, "Audio Input", audio_inputs, OFX_UI_ORIENTATION_HORIZONTAL));
-    gui->addWidgetRight(new ofxUIRadio( 10, 10, "MIDI Input", midi_inputs, OFX_UI_ORIENTATION_HORIZONTAL));
+    for (int i=0; i< audioTemp->getDeviceCount(); i++) {  
+        try {  
+            if (audioTemp->getDeviceInfo(i).inputChannels > 0) {
+                audio_inputs_ui.push_back(audioTemp->getDeviceInfo(i).name);
+            }
+        } catch (RtError &error) {  
+            error.printMessage();  
+            break;  
+        }  
+    }  
+    
+    vector<string> midi_inputs_ui; 
+    for (int i = 0; i < midiIn.portNames.size(); i++) {
+        midi_inputs_ui.push_back(ofToString(i));
+    }
+    
+    gui->addWidgetRight(new ofxUIRadio( 10, 10, "Audio Input", audio_inputs_ui, OFX_UI_ORIENTATION_HORIZONTAL));
+    gui->addWidgetRight(new ofxUIRadio( 10, 10, "MIDI Input", midi_inputs_ui, OFX_UI_ORIENTATION_HORIZONTAL));
     
     ofAddListener(gui->newGUIEvent, this, &testApp::guiEvent); 
     gui->loadSettings("GUI/guiSettings.xml"); // this triggers the audio and midi setup as well as the setting load
         
     // Setup default colour
-    for (int c = 0; c < CHANNEL_COUNT; c++) {
+    for (int c = 0; c < channelCount; c++) {
         spectrums[c].setup();
         classicBars[c].setup();
         averageVolumes[c].setup();
@@ -38,7 +49,7 @@ void testApp::setup(){
     }
 
     midiVis.setup();
-        
+    audioInputSetup();        
 }
 
 void testApp::audioInputSetup() {
@@ -48,8 +59,8 @@ void testApp::audioInputSetup() {
 	// x samples per second
 	// x samples per buffer
 	// x num buffers (latency)
-    
-    soundStream.setup(this, 0, CHANNEL_COUNT, 44100, BUFFER_SIZE, 2);
+        
+    soundStream.setup(this, 0, channelCount, 44100, BUFFER_SIZE, 2);
 
     // Clear all vectors...
     
@@ -74,7 +85,7 @@ void testApp::audioInputSetup() {
     
     // Build them again
     
-    for (int c = 0; c < CHANNEL_COUNT; c++) {
+    for (int c = 0; c < channelCount; c++) {
 
         // chn.push_back(new float[BUFFER_SIZE]);
         
@@ -96,7 +107,7 @@ void testApp::audioInputSetup() {
         
         // Octave
         
-        FFTanalyzer[c].FFTOctaveAnalyzer::setup(44100, BUFFER_SIZE/CHANNEL_COUNT, 1);
+        FFTanalyzer[c].FFTOctaveAnalyzer::setup(44100, BUFFER_SIZE/channelCount, 1);
         FFTanalyzer[c].peakHoldTime = 15; // hold longer
         FFTanalyzer[c].peakDecayRate = 0.95f; // decay slower
         FFTanalyzer[c].linearEQIntercept = 0.3f; // reduced gain at lowest frequency
@@ -115,7 +126,7 @@ void testApp::audioInputSetup() {
 //--------------------------------------------------------------
 void testApp::update(){
     
-    for (int c = 0; c < CHANNEL_COUNT; c++) {
+    for (int c = 0; c < channelCount; c++) {
         scaledVol[c] = ofMap(smoothedVol[c], 0.0, 0.17, 0.0, 1.0, true); // scale the vol up to a 0-1 range
         // Update Visualisers with audio data if required
         averageVolumes[c].update( scaledVol[c] );
@@ -133,7 +144,7 @@ void testApp::draw(){
     
     // Audio Visualisers
 
-    for (int c = 0; c < CHANNEL_COUNT; c++) {
+    for (int c = 0; c < channelCount; c++) {
         averageVolumes[c].draw( scaledVol[c] );
         spectrums[c].draw( chn[c] );
         classicBars[c].draw(fftOutput[c], eqOutput[c], fft[c]->getBinSize());
@@ -205,7 +216,7 @@ void testApp::newMidiMessage(ofxMidiEventArgs& eventArgs) {
     midiVis.update(value);
     midiVis.colour.setHue(value);
     
-    for (int c = 0; c < CHANNEL_COUNT; c++) {
+    for (int c = 0; c < channelCount; c++) {
         spectrums[c].colour.setHue(value);
         classicBars[c].colour.setHue(value);
         averageVolumes[c].colour.setHue(value);
@@ -262,9 +273,17 @@ void testApp::guiEvent(ofxUIEventArgs &e)
         soundStream.stop();
         soundStream.close();
         ofxUIToggle *toggle = (ofxUIToggle *) e.widget;
-        if (toggle->getValue() == 1)
-            soundStream.setDeviceID(ofToInt(e.widget->getName()));
-        audioInputSetup();
+        if (toggle->getValue() == 1) {
+            for (int i=0; i< audioTemp->getDeviceCount(); i++) {
+                if (audioTemp->getDeviceInfo(i).name == e.widget->getName()) {
+                    soundStream.setDeviceID(i);
+                    channelCount = audioTemp->getDeviceInfo(i).inputChannels;
+                    if ( channelCount > MAX_CHANNEL_COUNT)
+                        channelCount = MAX_CHANNEL_COUNT;
+                    audioInputSetup();
+                }
+            }
+        }
     }
     
     if (e.widget->getParent()->getName() == "MIDI Input") {

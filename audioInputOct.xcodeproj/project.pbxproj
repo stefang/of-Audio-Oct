@@ -436,6 +436,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		82E34D071534B5D8003575DF /* helpers */ = {
+			isa = PBXGroup;
+			children = (
+				82AE1D28152B0C6300D5055F /* fftOctaveAnalyzer.cpp */,
+				82AE1D29152B0C6300D5055F /* fftOctaveAnalyzer.h */,
+			);
+			name = helpers;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -509,8 +518,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				82AE1D28152B0C6300D5055F /* fftOctaveAnalyzer.cpp */,
-				82AE1D29152B0C6300D5055F /* fftOctaveAnalyzer.h */,
+				82E34D071534B5D8003575DF /* helpers */,
 				825FD46E151A3457001E9013 /* visualizers */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,

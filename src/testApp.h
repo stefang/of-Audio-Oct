@@ -2,10 +2,12 @@
 #define _TEST_APP
 
 #define BUFFER_SIZE 128
-#define CHANNEL_COUNT 2
+#define MAX_CHANNEL_COUNT 6
 
 #include "ofMain.h"
 #include "ofxUI.h"
+
+#include "RtAudio.h"
 
 #include "ofxMidi.h"
 #include "ofxFft.h"
@@ -43,18 +45,20 @@ class testApp : public ofBaseApp, public ofxMidiListener {
     
     ofxUICanvas *gui;
             
+    ofPtr<RtAudio> audioTemp; 
+
     int channelCount;
     void audioIn(float * input, int bufferSize, int nChannels); 
     void audioInputSetup();
     
-    vector <float> chn[CHANNEL_COUNT];
+    vector <float> chn[MAX_CHANNEL_COUNT];
 
     // vector< vector<float> > chn;
     // vector< vector<float> > chn;
     // vector <float*> chn;
     
     vector <ofxFft*> fft;
-    FFTOctaveAnalyzer FFTanalyzer[CHANNEL_COUNT];
+    FFTOctaveAnalyzer FFTanalyzer[MAX_CHANNEL_COUNT];
     // vector <FFTOctaveAnalyzer*> FFTanalyzer;
     
     vector <float*> audioInput;
