@@ -24,7 +24,7 @@ void MidiBlocks::update(int value) {
 void MidiBlocks::draw() {
     ofPushStyle();
     ofPushMatrix();
-    ofTranslate(20, 20);
+    ofTranslate(20, 70);
     ofSetColor(225);
     for (int i = 0; i < 127; i++) {
         if (notes[i]==true) {

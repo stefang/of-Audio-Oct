@@ -7,7 +7,7 @@ void testApp::setup(){
 	ofSetCircleResolution(80);
 	ofBackground(54, 54, 54);
 	
-    gui = new ofxUICanvas(10,ofGetViewportHeight()-55,ofGetViewportWidth()-20,55);
+    gui = new ofxUICanvas();
     
     vector<string> audio_inputs_ui; 
     
@@ -32,13 +32,27 @@ void testApp::setup(){
     vector<string> midi_inputs_ui; 
     
     for (int i = 0; i < midiIn.getPortList().size(); i++) {
-        midi_inputs_ui.push_back(ofToString(i));
+        midi_inputs_ui.push_back(midiIn.getPortName(i));
     }
     
     midiIn.setVerbose(true);
     
-    gui->addWidgetRight(new ofxUIRadio( 10, 10, "Audio Input", audio_inputs_ui, OFX_UI_ORIENTATION_HORIZONTAL));
-    gui->addWidgetRight(new ofxUIRadio( 10, 10, "MIDI Input", midi_inputs_ui, OFX_UI_ORIENTATION_HORIZONTAL));
+    // Temp 
+    
+    soundStream.setDeviceID(0);
+    channelCount = audioTemp->getDeviceInfo(0).inputChannels;
+    if ( channelCount > MAX_CHANNEL_COUNT)
+        channelCount = MAX_CHANNEL_COUNT;
+    audioInputSetup();
+    
+    // Setup GUI
+    
+    ofxUIDropDownList *ai = (ofxUIDropDownList *) gui->addWidgetRight(new ofxUIDropDownList(200, "AUDIO INPUT", audio_inputs_ui, OFX_UI_FONT_MEDIUM)); 
+    ai->setAutoClose(true);
+    ai->setAllowMultiple(false);
+    ofxUIDropDownList *mi = (ofxUIDropDownList *) gui->addWidgetRight(new ofxUIDropDownList(200, "MIDI INPUT", midi_inputs_ui, OFX_UI_FONT_MEDIUM)); 
+    mi->setAutoClose(true);
+    mi->setAllowMultiple(false);
     
     ofAddListener(gui->newGUIEvent, this, &testApp::guiEvent); 
     gui->loadSettings("GUI/guiSettings.xml"); // this triggers the audio and midi setup as well as the setting load
@@ -117,10 +131,10 @@ void testApp::audioInputSetup() {
         FFTanalyzer[c].linearEQSlope = 0.4f; // increasing gain at higher frequencies
         
         // Create Visualisers
-        spectrums.push_back( Spectrum(ofVec2f(20,(c*100+50)), c));
-        classicBars.push_back( ClassicFftBars(ofVec2f(296,(c*100+50)), c));
-        averageVolumes.push_back( AverageVolume(ofVec2f(856,(c*100+50))));
-        octaveEqs.push_back( Octaves(ofVec2f(1276,(c*100+50)), c));
+        spectrums.push_back( Spectrum(ofVec2f(20,(c*100+100)), c));
+        classicBars.push_back( ClassicFftBars(ofVec2f(296,(c*100+100)), c));
+        averageVolumes.push_back( AverageVolume(ofVec2f(856,(c*100+100))));
+        octaveEqs.push_back( Octaves(ofVec2f(1276,(c*100+100)), c));
 
     }
     
@@ -206,6 +220,7 @@ void testApp::audioIn(float * input, int bufferSize, int nChannels){
 
 //--------------------------------------------------------------
 void testApp::keyPressed  (int key){ 
+    gui->toggleVisible();
 }
 
 //--------------------------------------------------------------
@@ -219,12 +234,6 @@ void testApp::newMidiMessage(ofxMidiMessage& msg) {
     // midiMessage.control
     // midiMessage.value
 	
-//	// store some data from midi message in variables
-//	value = eventArgs.byteOne;
-//	id = eventArgs.channel;
-//	port = eventArgs.port;
-//	timestamp = eventArgs.timestamp;
-
     midiVis.update(midiMessage.pitch);
     midiVis.colour.setHue(midiMessage.pitch);
     
@@ -281,32 +290,58 @@ void testApp::dragEvent(ofDragInfo dragInfo){
 void testApp::guiEvent(ofxUIEventArgs &e)
 {
     
-    if (e.widget->getParent()->getName() == "Audio Input") {
+    string inputName;
+    
+    if (e.widget->getName() == "AUDIO INPUT" || e.widget->getParent()->getName() == "AUDIO INPUT" ) {
+
         soundStream.stop();
         soundStream.close();
-        ofxUIToggle *toggle = (ofxUIToggle *) e.widget;
-        if (toggle->getValue() == 1) {
-            for (int i=0; i< audioTemp->getDeviceCount(); i++) {
-                if (audioTemp->getDeviceInfo(i).name == e.widget->getName()) {
-                    soundStream.setDeviceID(i);
-                    channelCount = audioTemp->getDeviceInfo(i).inputChannels;
-                    if ( channelCount > MAX_CHANNEL_COUNT)
-                        channelCount = MAX_CHANNEL_COUNT;
-                    audioInputSetup();
-                }
+        
+        if (e.widget->getName() == "AUDIO INPUT") {
+            ofxUIDropDownList *ddlist = (ofxUIDropDownList *) e.widget;
+            vector<ofxUIWidget *> &selected = ddlist->getSelected(); 
+            for(int i = 0; i < selected.size(); i++)
+            {
+                inputName = selected[i]->getName();
+            }
+        } else {
+            ofxUIButton *button = (ofxUIButton *) e.widget;
+            if (button->getValue() == 1) {
+                inputName = button->getName();
+            }
+        }
+
+        for (int j=0; j< audioTemp->getDeviceCount(); j++) {
+            if (audioTemp->getDeviceInfo(j).name == inputName) {
+                soundStream.setDeviceID(j);
+                channelCount = audioTemp->getDeviceInfo(j).inputChannels;
+                if ( channelCount > MAX_CHANNEL_COUNT)
+                    channelCount = MAX_CHANNEL_COUNT;
+                audioInputSetup();
             }
         }
     }
     
-    if (e.widget->getParent()->getName() == "MIDI Input") {
+    if (e.widget->getName() == "MIDI INPUT" || e.widget->getParent()->getName() == "MIDI INPUT") {
         midiIn.removeListener(this);
         midiIn.closePort();
-        ofxUIToggle *toggle = (ofxUIToggle *) e.widget;
-        if (toggle->getValue() == 1)
-            midiIn.openPort(ofToInt(e.widget->getName()));
+        if (e.widget->getName() == "MIDI INPUT") {
+            ofxUIDropDownList *ddlist = (ofxUIDropDownList *) e.widget;
+            vector<ofxUIWidget *> &selected = ddlist->getSelected(); 
+            for(int i = 0; i < selected.size(); i++)
+            {
+                inputName = selected[i]->getName();
+                
+            }
+        } else {
+            ofxUIButton *button = (ofxUIButton *) e.widget;
+            if (button->getValue() == 1) {
+                inputName = button->getName();
+            }
+        }
+        midiIn.openPort(inputName);
         midiIn.addListener(this);
     }
-    
 }
 
 //--------------------------------------------------------------
