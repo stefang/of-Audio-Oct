@@ -70,8 +70,6 @@ class testApp : public ofBaseApp, public ofxMidiListener {
     vector <float> smoothedVol;
     vector <float> scaledVol;
     
-    void newMidiMessage(ofxMidiEventArgs& eventArgs);
-
     int port;
     int id;
     int value;
@@ -80,6 +78,9 @@ class testApp : public ofBaseApp, public ofxMidiListener {
     char msg[255];
 
     ofxMidiIn midiIn;
+    ofxMidiMessage midiMessage;
+    void newMidiMessage(ofxMidiMessage& eventArgs);
+    
     ofSoundStream soundStream;
         
     // Visualizers

@@ -30,9 +30,12 @@ void testApp::setup(){
     }  
     
     vector<string> midi_inputs_ui; 
-    for (int i = 0; i < midiIn.portNames.size(); i++) {
+    
+    for (int i = 0; i < midiIn.getPortList().size(); i++) {
         midi_inputs_ui.push_back(ofToString(i));
     }
+    
+    midiIn.setVerbose(true);
     
     gui->addWidgetRight(new ofxUIRadio( 10, 10, "Audio Input", audio_inputs_ui, OFX_UI_ORIENTATION_HORIZONTAL));
     gui->addWidgetRight(new ofxUIRadio( 10, 10, "MIDI Input", midi_inputs_ui, OFX_UI_ORIENTATION_HORIZONTAL));
@@ -206,21 +209,30 @@ void testApp::keyPressed  (int key){
 }
 
 //--------------------------------------------------------------
-void testApp::newMidiMessage(ofxMidiEventArgs& eventArgs) {
+void testApp::newMidiMessage(ofxMidiMessage& msg) {
+    
+    midiMessage = msg;
+    
+    // midiMessage.channel
+    // midiMessage.pitch
+    // midiMessage.velocity
+    // midiMessage.control
+    // midiMessage.value
 	
-	// store some data from midi message in variables
-	value = eventArgs.byteOne;
-	id = eventArgs.channel;
-	port = eventArgs.port;
-	timestamp = eventArgs.timestamp;
-    midiVis.update(value);
-    midiVis.colour.setHue(value);
+//	// store some data from midi message in variables
+//	value = eventArgs.byteOne;
+//	id = eventArgs.channel;
+//	port = eventArgs.port;
+//	timestamp = eventArgs.timestamp;
+
+    midiVis.update(midiMessage.pitch);
+    midiVis.colour.setHue(midiMessage.pitch);
     
     for (int c = 0; c < channelCount; c++) {
-        spectrums[c].colour.setHue(value);
-        classicBars[c].colour.setHue(value);
-        averageVolumes[c].colour.setHue(value);
-        octaveEqs[c].colour.setHue(value);
+        spectrums[c].colour.setHue(midiMessage.pitch);
+        classicBars[c].colour.setHue(midiMessage.pitch);
+        averageVolumes[c].colour.setHue(midiMessage.pitch);
+        octaveEqs[c].colour.setHue(midiMessage.pitch);
     }
 
     
