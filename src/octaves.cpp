@@ -29,14 +29,14 @@ void Octaves::draw(int nAverages, float* averages, float* peaks) {
     
     ofFill();
 
-    ofSetColor(150, 150, 150);
-	for (int i = 0; i < nAverages; i++){
-		ofRect(i*22,(-peaks[i] * 220)+95,20,-1);
-	}
-
     ofSetColor(colour);
     for (int i = 0; i < nAverages; i++){
 		ofRect(i*22,95,20,-averages[i] * 220 -1);
+	}
+
+    ofSetColor(255, 0, 0);
+	for (int i = 0; i < nAverages; i++){
+		ofRect(i*22,(-peaks[i] * 220)+95,20,-2);
 	}
 
     ofPopMatrix();
