@@ -53,6 +53,14 @@ void FFTOctaveAnalyzer::setup(float samplingRate, int nBandsInTheFFT, int nAvera
     peakDecayRate = 0.9f; // arbitrary
     linearEQIntercept = 1.0f; // unity -- no eq by default
     linearEQSlope = 0.0f; // unity -- no eq by default
+    
+    // Zero arrays. Prevents spurious massive peak readings from dodgy audio buffer
+    
+    for (int i=0; i < nAverages; i++) {
+		averages[i] = 0;
+        peaks[i] = 0;
+    }
+
 }
 
 void FFTOctaveAnalyzer::calculate(float * fftData){

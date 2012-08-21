@@ -37,14 +37,6 @@ void testApp::setup(){
     
     midiIn.setVerbose(true);
     
-    // Temp 
-    
-    soundStream.setDeviceID(0);
-    channelCount = audioTemp->getDeviceInfo(0).inputChannels;
-    if ( channelCount > MAX_CHANNEL_COUNT)
-        channelCount = MAX_CHANNEL_COUNT;
-    audioInputSetup();
-    
     // Setup GUI
     
     ofxUIDropDownList *ai = (ofxUIDropDownList *) gui->addWidgetRight(new ofxUIDropDownList(200, "AUDIO INPUT", audio_inputs_ui, OFX_UI_FONT_MEDIUM)); 
@@ -66,7 +58,11 @@ void testApp::setup(){
     }
 
     midiVis.setup();
-    audioInputSetup();        
+    audioInputSetup();   
+        
+    fbo.allocate(1460,720);
+    glow.allocate(1460,720);
+    glow.setRadius(5);
 }
 
 void testApp::audioInputSetup() {
@@ -156,6 +152,9 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
     
+    fbo.begin();
+    ofBackground(0, 0, 0);
+    
     ofSetColor(225);
     ofNoFill();
     
@@ -169,6 +168,12 @@ void testApp::draw(){
     }
     
     midiVis.draw();
+    
+    fbo.end();
+    glow.setTexture(fbo.getTextureReference());
+    glow.update();
+
+    glow.draw(0,0);
         
     // Keep an eye on frameRate
 

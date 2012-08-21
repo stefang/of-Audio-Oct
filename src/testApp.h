@@ -6,6 +6,7 @@
 
 #include "ofMain.h"
 #include "ofxUI.h"
+#include "ofxFX.h"
 
 #include "RtAudio.h"
 
@@ -91,6 +92,9 @@ class testApp : public ofBaseApp, public ofxMidiListener {
     vector<Octaves> octaveEqs;    
     
     MidiBlocks midiVis;
+
+    ofxGlow  glow;
+    ofFbo    fbo;
     
 };
 
