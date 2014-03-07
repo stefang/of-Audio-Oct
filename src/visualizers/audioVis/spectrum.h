@@ -19,8 +19,6 @@ class Spectrum
     public :
     Spectrum();
     Spectrum(ofVec2f pos, int c) {
-        
-        cout << pos << endl;
         position = pos;
         channel = c;
     }

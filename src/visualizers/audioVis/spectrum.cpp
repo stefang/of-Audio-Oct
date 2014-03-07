@@ -22,7 +22,7 @@ void Spectrum::draw(float* chn, int size) {
     ofPushStyle();
     ofPushMatrix();
     
-     ofTranslate(position);
+    ofTranslate(position);
 
     ofSetColor(225);
     sprintf(title,"Channel: %i", channel);

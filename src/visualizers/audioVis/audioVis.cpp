@@ -20,13 +20,6 @@ void AudioVis::setup() {
     }
 }
 
-void AudioVis::enable() {
-    ofDisableLighting();
-}
-
-void AudioVis::disable() {
-}
-
 void AudioVis::update() {
 }
 

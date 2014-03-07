@@ -26,8 +26,6 @@ class AudioVis : public Visualizer
     void setup();
     void update();
     void draw();
-    void enable();
-    void disable();
     
     vector<AverageVolume> averageVolumes;
     vector<Spectrum> spectrums;    
