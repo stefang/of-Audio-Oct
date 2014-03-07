@@ -18,28 +18,28 @@ void Spectrum::setup() {
 void Spectrum::update() {
 }
 
-void Spectrum::draw( vector <float> chn ) {
+void Spectrum::draw(float* chn, int size) {
     ofPushStyle();
     ofPushMatrix();
-    ofTranslate(position);
     
+     ofTranslate(position);
+
     ofSetColor(225);
     sprintf(title,"Channel: %i", channel);
     
     ofDrawBitmapString(title, 4, 18);
     
     ofSetLineWidth(1);	
+    ofNoFill();
     ofRect(0, 0, 256, 100);
     
     ofSetColor(colour);
-    ofSetLineWidth(3);
+    ofSetLineWidth(1);
     
     ofBeginShape();
     
-    for (int i = 0; i < chn.size(); i++){
-//    for (int i = 0; i < sizeof(chn); i++){
-
-        ofVertex((i*2)+2, 50 -chn[i]*90.0f);
+    for (int i = 0; i < size; i++){
+        ofVertex((i / (size/256))+1, 50 -chn[i]*90.0f);
     }
     ofEndShape(false);
     

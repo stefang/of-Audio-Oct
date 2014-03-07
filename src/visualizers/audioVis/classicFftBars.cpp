@@ -21,30 +21,24 @@ void ClassicFftBars::draw(float* fftOutput, float* eqOutput, int fftBinSize) {
 	ofPushMatrix();
     
     ofTranslate(position);
-    sprintf(title,"FFT: %i", channel);
-    ofDrawBitmapString(title, 4, 18);
-    plot(fftOutput, fftBinSize, -plotHeight, plotHeight/2);
-    ofPushMatrix();
-
-    ofTranslate(fftBinSize*4+ 20, 0, 0);
     sprintf(title,"FFT EQ: %i", channel);
     ofDrawBitmapString(title, 4, 18);
     plot(eqOutput, fftBinSize, -plotHeight, plotHeight/2);
-    ofPopMatrix();
 
-	ofPopMatrix();
+    ofPopMatrix();
     ofPopStyle();
 }
 
 void ClassicFftBars::plot(float* array, int length, float scale, float offset) {
-    ofRect(0, 0, length*4 + 5, plotHeight);
+    ofNoFill();
+    ofRect(0, 0, length*2 + 5, plotHeight);
 	ofPushMatrix();
 	ofTranslate(4, (plotHeight / 2 + offset) -3, 0);
     ofPushStyle();
     ofSetColor(colour);
     ofFill();
     for (int i = 0; i < length; i++)
-        ofRect(i*4, 0, 3, (array[i] * scale) - 1);
+        ofRect(i*2, 0, 1, (array[i] * scale) - 1);
     ofPopStyle();
     ofPopMatrix();
 }

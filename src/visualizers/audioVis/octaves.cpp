@@ -22,6 +22,7 @@ void Octaves::draw(int nAverages, float* averages, float* peaks) {
     ofTranslate(position);
     sprintf(title,"Octaves: %i", channel);
     ofDrawBitmapString(title, 4, 18);
+    ofNoFill();
     ofRect(0, 0, nAverages*22+7, 100);
     
     ofPushMatrix();

@@ -19,13 +19,15 @@ class Spectrum
     public :
     Spectrum();
     Spectrum(ofVec2f pos, int c) {
+        
+        cout << pos << endl;
         position = pos;
         channel = c;
     }
 
     void setup();
     void update();
-    void draw( vector <float> chn );
+    void draw(float* audioInput, int size);
     
     char title[255];
     int channel;
@@ -35,6 +37,5 @@ class Spectrum
 
     
 };
-
 
 #endif

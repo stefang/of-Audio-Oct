@@ -20,7 +20,7 @@ void FFTOctaveAnalyzer::setup(float samplingRate, int nBandsInTheFFT, int nAvera
     // but don't go much smaller unless you have a huge fft window size (see below for more why)
     // keep in mind, if you change it, that the number of actual bands may change +/-1, and
     // for some values, the last averaging band may not be very useful (may extend above nyquist)
-    firstOctaveFrequency = 200.0f;
+    firstOctaveFrequency = 86.0f;
     // for each spectrum[] bin, calculate the mapping into the appropriate average[] bin.
     // this gives us roughly log-sized averaging bins, subject to how "fine" the spectrum bins are.
     // with more spectrum bins, you can better map into the averaging bins (especially at low
@@ -53,8 +53,6 @@ void FFTOctaveAnalyzer::setup(float samplingRate, int nBandsInTheFFT, int nAvera
     peakDecayRate = 0.9f; // arbitrary
     linearEQIntercept = 1.0f; // unity -- no eq by default
     linearEQSlope = 0.0f; // unity -- no eq by default
-    
-    // Zero arrays. Prevents spurious massive peak readings from dodgy audio buffer
     
     for (int i=0; i < nAverages; i++) {
 		averages[i] = 0;
@@ -89,17 +87,20 @@ void FFTOctaveAnalyzer::calculate(float * fftData){
 	
     // update the peaks separately
     for (int i=0; i < nAverages; i++) {
-		if (averages[i] >= peaks[i]) {
-			// save new peak level, also reset the hold timer
-			peaks[i] = averages[i];
-			peakHoldTimes[i] = peakHoldTime;
-		} else {
-			// current average does not exceed peak, so hold or decay the peak
-			if (peakHoldTimes[i] > 0) {
-				peakHoldTimes[i]--;
-			} else {
-				peaks[i] *= peakDecayRate;
-			}
-		}
+        // fix for insane levels due to soundcard madness
+        if (averages[i] < 5 && averages[i] > -1) {
+            if (averages[i] >= peaks[i]) {
+                // save new peak level, also reset the hold timer
+                peaks[i] = averages[i];
+                peakHoldTimes[i] = peakHoldTime;
+            } else {
+                // current average does not exceed peak, so hold or decay the peak
+                if (peakHoldTimes[i] > 0) {
+                    peakHoldTimes[i]--;
+                } else {
+                    peaks[i] *= peakDecayRate;
+                }
+            }
+        }
     }
 }
