@@ -20,14 +20,11 @@ class AverageVolume
     AverageVolume();
     AverageVolume(ofVec2f pos) {
         position = pos;
-        volHistory.assign(400, 0.0);
     }
     
     void setup();
-    void update(float scaledVol);
+    void update();
     void draw(float scaledVol);
-    
-    vector <float> volHistory;
     
     ofVec2f position;
     ofColor colour;

@@ -15,15 +15,7 @@ void AverageVolume::setup() {
     colour.setHsb(0, 255, 255);
 }
 
-void AverageVolume::update(float scaledVol) {
-    //lets record the volume into an array
-    // volHistory.push_back( scaledVol );
-    
-    //if we are bigger the the size we want to record - lets drop the oldest value
-//    if( volHistory.size() >= 400 ){
-//        volHistory.erase(volHistory.begin(), volHistory.begin()+1);
-//    }
-
+void AverageVolume::update() {
 }
 
 void AverageVolume::draw(float scaledVol) {
@@ -44,17 +36,6 @@ void AverageVolume::draw(float scaledVol) {
     ofFill();		
     ofCircle(50, 50, scaledVol * 15.0f);
 
-    //lets draw the volume history as a graph
-//    ofBeginShape();
-//    for (int i = 0; i < volHistory.size(); i++){
-//        if( i == 0 ) ofVertex(i+1, 99);
-//        
-//        ofVertex(i+1, 99 - volHistory[i] * 70);
-//        
-//        if( i == volHistory.size() -1 ) ofVertex(i+1, 99);
-//    }
-//    ofEndShape(false);		
-    
     ofPopMatrix();
     ofPopStyle();
 }
